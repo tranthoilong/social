@@ -1,0 +1,35 @@
+[27-Nov-2025 07:42:16 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: No such file or directory in /var/www/wowonder/install/index.php:22
+Stack trace:
+#0 /var/www/wowonder/install/index.php(22): mysqli_connect()
+#1 {main}
+  thrown in /var/www/wowonder/install/index.php on line 22
+[27-Nov-2025 07:42:24 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: No such file or directory in /var/www/wowonder/install/index.php:22
+Stack trace:
+#0 /var/www/wowonder/install/index.php(22): mysqli_connect()
+#1 {main}
+  thrown in /var/www/wowonder/install/index.php on line 22
+[27-Nov-2025 07:42:33 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: No such file or directory in /var/www/wowonder/install/index.php:22
+Stack trace:
+#0 /var/www/wowonder/install/index.php(22): mysqli_connect()
+#1 {main}
+  thrown in /var/www/wowonder/install/index.php on line 22
+[27-Nov-2025 07:45:12 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: No such file or directory in /var/www/wowonder/install/index.php:22
+Stack trace:
+#0 /var/www/wowonder/install/index.php(22): mysqli_connect()
+#1 {main}
+  thrown in /var/www/wowonder/install/index.php on line 22
+[27-Nov-2025 07:46:12 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Connection refused in /var/www/wowonder/install/index.php:22
+Stack trace:
+#0 /var/www/wowonder/install/index.php(22): mysqli_connect()
+#1 {main}
+  thrown in /var/www/wowonder/install/index.php on line 22
+[27-Nov-2025 07:47:08 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Connection refused in /var/www/wowonder/install/index.php:22
+Stack trace:
+#0 /var/www/wowonder/install/index.php(22): mysqli_connect()
+#1 {main}
+  thrown in /var/www/wowonder/install/index.php on line 22
+[27-Nov-2025 07:48:41 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'bank_receipts' already exists in /var/www/wowonder/install/index.php:120
+Stack trace:
+#0 /var/www/wowonder/install/index.php(120): mysqli_query()
+#1 {main}
+  thrown in /var/www/wowonder/install/index.php on line 120
