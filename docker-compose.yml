@@ -1,0 +1,71 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: wowonder-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: change_me_root
+      MYSQL_DATABASE: wowonder
+      MYSQL_USER: wowonder
+      MYSQL_PASSWORD: change_me_app
+    ports:
+      - "3434:3306"
+    volumes:
+      - ./docker/db_data:/var/lib/mysql
+      - ./wowonder.sql:/docker-entrypoint-initdb.d/wowonderv2.sql:ro
+    command: --default-authentication-plugin=mysql_native_password --sql-mode="NO_ENGINE_SUBSTITUTION"
+    networks:
+      - wowonder-network
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: wowonder-php
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    networks:
+      - wowonder-network
+    depends_on:
+      - db
+
+  nodejs:
+    build:
+      context: ./nodejs
+      dockerfile: ../docker/nodejs/Dockerfile
+    container_name: wowonder-nodejs
+    restart: unless-stopped
+    volumes:
+      - ./nodejs:/app
+    environment:
+      - NODE_ENV=production
+    networks:
+      - wowonder-network
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    container_name: wowonder-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/goivondautu.delitech.vn:/etc/nginx/conf.d/goivondautu.delitech.vn.conf
+      - ./docker/nginx/rewrites.inc:/etc/nginx/conf.d/rewrites.inc
+    networks:
+      - wowonder-network
+    depends_on:
+      - php
+      - nodejs
+
+networks:
+  wowonder-network:
+    driver: bridge
+

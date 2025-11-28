@@ -14,3 +14,5 @@
 **/test*.php
 /assets/libraries/twilio/vendor/twilio/sdk/test*.php
 /db_data/*
+/docker/db_data/*
+/docker/db_data/

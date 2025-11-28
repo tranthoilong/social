@@ -1,9 +1,9 @@
 {
-    "sql_db_host": "103.200.22.163",
-    "sql_db_port": 3434,
+    "sql_db_host": "db",
+    "sql_db_port": 3306,
     "sql_db_user": "wowonder",
     "sql_db_pass": "change_me_app",
     "sql_db_name": "wowonder",
-    "site_url": "http://wowonder.delitech.vn",
+    "site_url": "http://goivondautu.delitech.vn",
     "purchase_code": ""
 }

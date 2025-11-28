@@ -1,0 +1,103 @@
+server {
+    listen 80;
+    server_name goivondautu.delitech.vn;
+    
+    root /var/www/html;
+    index index.php index.html;
+
+    client_max_body_size 100M;
+    
+    # Logging
+    access_log /var/log/nginx/goivondautu.access.log;
+    error_log /var/log/nginx/goivondautu.error.log;
+
+    # Main location block
+    location / {
+        if (!-e $request_filename){
+            rewrite ^/password-reset/([^\/]+)(\/|)$ /index.php?link1=welcome&link2=password_reset&user_id=$1;
+        }
+        rewrite ^/$ /index.php?link1=home;
+        rewrite "^/forum/members/([a-zA-Z]{0,1})(/?|)$" /index.php?link1=forum-members-byname&char=$1;
+        if (!-e $request_filename){
+            rewrite ^/setting/([A-Za-z0-9_-]+)$ /index.php?link1=setting&page=$1;
+        }
+        if (!-e $request_filename){
+            rewrite ^/@([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1;
+        }
+        if (!-e $request_filename){
+            rewrite ^/([A-Za-z0-9_]+)/([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1&type=$2;
+        }
+        if (!-e $request_filename){
+            rewrite ^/([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1;
+        }
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # PHP-FPM configuration
+    location ~ \.php$ {
+        fastcgi_pass php:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 4 256k;
+        fastcgi_busy_buffers_size 256k;
+    }
+
+    # Socket.IO proxy
+    location /socket.io/ {
+        proxy_pass http://nodejs:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+    }
+
+    # Static files
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # Admin routes
+    location /admin {
+        rewrite ^/admin$ /admincp.php last;
+        rewrite ^/admin/$ /admincp.php last;
+        rewrite ^/admin-cp$ /admincp.php last;
+        rewrite ^/admin-cp/(.*)$ /admincp.php?page=$1 last;
+        rewrite ^/admin/ads/edit/(\d+)(/?|)$ /index.php?link1=manage-ads&id=$1 last;
+    }
+
+    location = /admincp {
+        rewrite ^(.*)$ /admincp.php;
+    }
+
+    location /admincp {
+        rewrite ^/admincp/(.*)$ /admincp.php?page=$1;
+    }
+
+    location /adminPages/ {
+        alias /var/www/html/admin-panel/;
+    }
+
+    # Include all other rewrite rules from nginx.conf
+    include /etc/nginx/conf.d/rewrites.inc;
+
+    # Deny access to sensitive directories
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    location ~ /(cache|sources|assets|nodejs) {
+        deny all;
+        return 404;
+    }
+}
