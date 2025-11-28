@@ -431,29 +431,49 @@ if ($f == 'messages') {
         exit();
     }
     if ($s == 'register_message_record') {
+        $data = array('status' => 400);
         if (isset($_POST['audio-filename']) && isset($_FILES['audio-blob']['name'])) {
+            // Normalize MIME type for WAV files (browsers may send audio/x-wav)
+            $mime_type = $_FILES["audio-blob"]["type"];
+            if ($mime_type == 'audio/x-wav' || $mime_type == 'audio/wave') {
+                $mime_type = 'audio/wav';
+            }
+            
             $fileInfo       = array(
                 'file' => $_FILES["audio-blob"]["tmp_name"],
                 'name' => $_FILES['audio-blob']['name'],
                 'size' => $_FILES["audio-blob"]["size"],
-                'type' => $_FILES["audio-blob"]["type"]
+                'type' => $mime_type
             );
             $media          = Wo_ShareFile($fileInfo);
-            $data['url']    = $media['filename'];
-            $data['status'] = 200;
-            $data['name']   = $media['name'];
+            if (!empty($media) && !empty($media['filename'])) {
+                $data['url']    = $media['filename'];
+                $data['status'] = 200;
+                $data['name']   = $media['name'];
+            }
+            else{
+                $data['status'] = 400;
+                $data['message'] = $error_icon . $wo['lang']['file_not_supported'];
+            }
         }
         header("Content-type: application/json");
         echo json_encode($data);
         exit();
     }
     if ($s == 'upload_record') {
+        $data = array('status' => 400);
         if (isset($_POST['audio-filename']) && isset($_FILES['audio-blob']['name'])) {
+            // Normalize MIME type for WAV files (browsers may send audio/x-wav)
+            $mime_type = $_FILES["audio-blob"]["type"];
+            if ($mime_type == 'audio/x-wav' || $mime_type == 'audio/wave') {
+                $mime_type = 'audio/wav';
+            }
+            
             $fileInfo       = array(
                 'file' => $_FILES["audio-blob"]["tmp_name"],
                 'name' => $_FILES['audio-blob']['name'],
                 'size' => $_FILES["audio-blob"]["size"],
-                'type' => $_FILES["audio-blob"]["type"]
+                'type' => $mime_type
             );
             $media          = Wo_ShareFile($fileInfo);
             if (!empty($media) && !empty($media['filename'])) {

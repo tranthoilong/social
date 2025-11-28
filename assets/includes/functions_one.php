@@ -5296,13 +5296,24 @@ function Wo_ShareFile($data = array(), $type = 0, $crop = true)
         return false;
     }
     if ($data['is_video'] == 0) {
+        // Normalize audio MIME types (browsers may send different variations)
+        $normalized_type = $data['type'];
+        if ($normalized_type == 'audio/x-wav' || $normalized_type == 'audio/wave') {
+            $normalized_type = 'audio/wav';
+        }
+        if ($normalized_type == 'audio/x-mp3') {
+            $normalized_type = 'audio/mpeg';
+        }
+        
         $mime_types = explode(',', str_replace(' ', '', $wo['config']['mime_types'] . ',application/json,application/octet-stream'));
         if (Wo_IsAdmin()) {
             $mime_types = explode(',', str_replace(' ', '', $wo['config']['mime_types'] . ',application/json,application/octet-stream,image/svg+xml'));
         }
-        if (!in_array($data['type'], $mime_types)) {
+        if (!in_array($normalized_type, $mime_types)) {
             return false;
         }
+        // Update the type to normalized version for consistency
+        $data['type'] = $normalized_type;
     }
     $dir = "upload/{$folder}/" . date('Y') . '/' . date('m');
     $filename = $dir . '/' . Wo_GenerateKey() . '_' . date('d') . '_' . md5(time()) . "_{$fileType}.{$file_extension}";
