@@ -28,24 +28,61 @@ function sanitize_output($buffer) {
 function Wo_LoadPage($page_url = '') {
     global $wo, $db;
     $create_file = false;
-    if ($page_url == 'sidebar/content' && $wo['loggedin'] == true && $wo['config']['cache_sidebar'] == 1) {
-        $file_path = './cache/sidebar-' . $wo['user']['user_id'] . '.tpl';
+    $from_cache = false;
+    $page_content = '';
+    
+    if ($page_url == 'sidebar/content' && $wo['loggedin'] == true && $wo['config']['cache_sidebar'] == 1 && !empty($wo['user']['user_id'])) {
+        // Include language in cache key to ensure proper translation per language
+        $lang_key = !empty($wo['language']) ? $wo['language'] : 'english';
+        $file_path = './cache/sidebar-' . $wo['user']['user_id'] . '-' . $lang_key . '.tpl';
         if (file_exists($file_path)) {
             $get_file = file_get_contents($file_path);
             if (!empty($get_file)) {
-                return $get_file;
+                $page_content = $get_file;
+                $from_cache = true;
             }
         } else {
             $create_file = true;
         }
     }
-    $page         = './themes/' . $wo['config']['theme'] . '/layout/' . $page_url . '.phtml';
-    $page_content = '';
-    ob_start();
-    require($page);
-    $page_content = ob_get_contents();
-    ob_end_clean();
+    
+    if (!$from_cache) {
+        $page         = './themes/' . $wo['config']['theme'] . '/layout/' . $page_url . '.phtml';
+        $page_content = '';
+        ob_start();
+        require($page);
+        $page_content = ob_get_contents();
+        ob_end_clean();
+    }
+    
+    // Apply language translation for {{LANG key}} pattern (even for cached content)
+    if (!empty($wo['lang'])) {
+        $replaceLang = ToArray($wo['lang']);
+        $page_content = preg_replace_callback("/{{LANG (.*?)}}/", function($m) use ($replaceLang) {
+            return (isset($replaceLang[$m[1]])) ? $replaceLang[$m[1]] : $m[1];
+        }, $page_content);
+    }
+    
+    // Apply user data replacement for {{ME key}} pattern
+    if ($wo['loggedin'] == true && !empty($wo['user'])) {
+        $replace = ToArray($wo['user']);
+        $page_content = preg_replace_callback("/{{ME (.*?)}}/", function($m) use ($replace) {
+            return (isset($replace[$m[1]])) ? $replace[$m[1]] : '';
+        }, $page_content);
+    }
+    
+    // Apply link replacement for {{LINK key}} pattern
+    $page_content = preg_replace("/{{LINK (.*?)}}/", getLink("$1"), $page_content);
+    
+    // Apply nested page loading for {{LOAD key}} pattern
+    $page_content = preg_replace_callback("/{{LOAD (.*?)}}/", function($m) {
+        return (!empty($m[1])) ? loadHTMLPage($m[1]) : '';
+    }, $page_content);
+    
     if ($create_file == true && $wo['config']['cache_sidebar'] == 1) {
+        // Use the same cache key with language included
+        $lang_key = !empty($wo['language']) ? $wo['language'] : 'english';
+        $file_path = './cache/sidebar-' . $wo['user']['user_id'] . '-' . $lang_key . '.tpl';
         $create_sidebar_file = file_put_contents($file_path, $page_content);
         setcookie("last_sidebar_update", time(), time() + (10 * 365 * 24 * 60 * 60));
     }
@@ -55,27 +92,36 @@ function loadHTMLPage($page_url = '', $data = array(), $set_lang = true) {
     global $wo, $db;
 
     $create_file = false;
-    if ($page_url == 'sidebar/content' && $wo['loggedin'] == true && $wo['config']['cache_sidebar'] == 1) {
-        $file_path = './cache/sidebar-' . $wo['user']['user_id'] . '.tpl';
+    $from_cache = false;
+    $page_content = '';
+    
+    if ($page_url == 'sidebar/content' && $wo['loggedin'] == true && $wo['config']['cache_sidebar'] == 1 && !empty($wo['user']['user_id'])) {
+        // Include language in cache key to ensure proper translation per language
+        $lang_key = !empty($wo['language']) ? $wo['language'] : 'english';
+        $file_path = './cache/sidebar-' . $wo['user']['user_id'] . '-' . $lang_key . '.tpl';
         if (file_exists($file_path)) {
             $get_file = file_get_contents($file_path);
             if (!empty($get_file)) {
-                return $get_file;
+                $page_content = $get_file;
+                $from_cache = true;
             }
         } else {
             $create_file = true;
         }
     }
-
-    $page         = './themes/' . $wo['config']['theme'] . '/layout/' . $page_url . '.phtml';
-    if (!file_exists($page)) {
-        die("File not Exists : $page");
+    
+    if (!$from_cache) {
+        $page         = './themes/' . $wo['config']['theme'] . '/layout/' . $page_url . '.phtml';
+        if (!file_exists($page)) {
+            die("File not Exists : $page");
+        }
+        $page_content = '';
+        ob_start();
+        require($page);
+        $page_content = ob_get_contents();
+        ob_end_clean();
     }
-    $page_content = '';
-    ob_start();
-    require($page);
-    $page_content = ob_get_contents();
-    ob_end_clean();
+    
     if (!empty($data) && is_array($data)) {
         foreach ($data as $key => $replace) {
             if ($key == 'USER_DATA') {
@@ -122,7 +168,18 @@ function loadHTMLPage($page_url = '', $data = array(), $set_lang = true) {
         return (isset($replaceConfig[$m[1]])) ? $replaceConfig[$m[1]] : '';
     }, $page_content);
 
-    if ($create_file == true && $wo['config']['cache_sidebar'] == 1) {
+    // Apply language translation for cached content if not already applied
+    if ($from_cache && $set_lang == true && !empty($wo['lang'])) {
+        $replaceLang = ToArray($wo['lang']);
+        $page_content = preg_replace_callback("/{{LANG (.*?)}}/", function($m) use ($replaceLang) {
+            return (isset($replaceLang[$m[1]])) ? $replaceLang[$m[1]] : $m[1];
+        }, $page_content);
+    }
+    
+    if ($create_file == true && $wo['config']['cache_sidebar'] == 1 && !empty($wo['user']['user_id'])) {
+        // Use the same cache key with language included
+        $lang_key = !empty($wo['language']) ? $wo['language'] : 'english';
+        $file_path = './cache/sidebar-' . $wo['user']['user_id'] . '-' . $lang_key . '.tpl';
         $create_sidebar_file = file_put_contents($file_path, $page_content);
         setcookie("last_sidebar_update", time(), time() + (10 * 365 * 24 * 60 * 60));
     }
@@ -138,9 +195,25 @@ function Wo_CleanCache($user_id = '', $where = 'sidebar') {
     if ($wo['config']['cache_sidebar'] == 0 || $wo['loggedin'] == false) {
         return false;
     }
-    $file_path = './cache/sidebar-' . $wo['user']['user_id'] . '.tpl';
-    if (file_exists($file_path)) {
-        unlink($file_path);
+    $user_id_to_use = !empty($user_id) ? $user_id : $wo['user']['user_id'];
+    
+    // Delete all sidebar cache files for this user (including all language variants)
+    $cache_dir = './cache/';
+    if (is_dir($cache_dir)) {
+        $pattern = $cache_dir . 'sidebar-' . $user_id_to_use . '-*.tpl';
+        $files = glob($pattern);
+        if ($files !== false) {
+            foreach ($files as $file) {
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
+        }
+        // Also delete old cache format without language (for backward compatibility)
+        $old_file = $cache_dir . 'sidebar-' . $user_id_to_use . '.tpl';
+        if (file_exists($old_file)) {
+            unlink($old_file);
+        }
     }
 }
 function Wo_CustomCode($a = false, $code = array()) {

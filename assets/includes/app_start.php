@@ -231,6 +231,28 @@ if (isset($_GET["lang"]) and !empty($_GET["lang"])) {
                 mysqli_query($sqlConnect, "UPDATE " . T_USERS . " SET `language` = '" . $lang_name . "' WHERE `user_id` = " . Wo_Secure($wo["user"]["user_id"]));
                 cache($wo["user"]["user_id"], 'users', 'delete');
             }
+            // Redirect to reload page with new language
+            // Build URL without lang parameter to avoid redirect loop
+            $query_params = $_GET;
+            unset($query_params["lang"]);
+            $redirect_url = '';
+            if (!empty($_GET["link1"])) {
+                $redirect_url = 'index.php?link1=' . Wo_Secure($_GET["link1"]);
+                if (!empty($query_params)) {
+                    foreach ($query_params as $key => $value) {
+                        if ($key != 'link1') {
+                            $redirect_url .= '&' . $key . '=' . urlencode($value);
+                        }
+                    }
+                }
+            } else {
+                $redirect_url = 'index.php';
+                if (!empty($query_params)) {
+                    $redirect_url .= '?' . http_build_query($query_params);
+                }
+            }
+            header("Location: " . Wo_SeoLink($redirect_url));
+            exit();
         }
     }
 }
