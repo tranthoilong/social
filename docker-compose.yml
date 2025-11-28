@@ -58,7 +58,10 @@ services:
     volumes:
       - .:/var/www/html
       - ./docker/nginx/goivondautu.delitech.vn:/etc/nginx/conf.d/goivondautu.delitech.vn.conf
+      - ./docker/nginx/goivondautu.delitech.vn.https:/etc/nginx/conf.d/goivondautu.delitech.vn.https
       - ./docker/nginx/rewrites.inc:/etc/nginx/conf.d/rewrites.inc
+      - ./docker/nginx/ssl:/etc/letsencrypt:ro
+      - ./docker/nginx/certbot:/var/www/certbot
     networks:
       - wowonder-network
     depends_on:

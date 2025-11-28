@@ -1,3 +1,4 @@
+# HTTP server - serve content (tạm thời để cấp SSL, sau đó sẽ redirect HTTPS)
 server {
     listen 80;
     server_name goivondautu.delitech.vn;
@@ -11,26 +12,18 @@ server {
     access_log /var/log/nginx/goivondautu.access.log;
     error_log /var/log/nginx/goivondautu.error.log;
 
-    # Main location block
+    # Let's Encrypt challenge - phải đặt trước các location khác
+    # Sử dụng prefix match với priority cao
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        allow all;
+        default_type text/plain;
+        try_files $uri =404;
+    }
+
+    # Redirect all other traffic to HTTPS (trừ .well-known đã được xử lý ở trên)
     location / {
-        if (!-e $request_filename){
-            rewrite ^/password-reset/([^\/]+)(\/|)$ /index.php?link1=welcome&link2=password_reset&user_id=$1;
-        }
-        rewrite ^/$ /index.php?link1=home;
-        rewrite "^/forum/members/([a-zA-Z]{0,1})(/?|)$" /index.php?link1=forum-members-byname&char=$1;
-        if (!-e $request_filename){
-            rewrite ^/setting/([A-Za-z0-9_-]+)$ /index.php?link1=setting&page=$1;
-        }
-        if (!-e $request_filename){
-            rewrite ^/@([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1;
-        }
-        if (!-e $request_filename){
-            rewrite ^/([A-Za-z0-9_]+)/([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1&type=$2;
-        }
-        if (!-e $request_filename){
-            rewrite ^/([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1;
-        }
-        try_files $uri $uri/ /index.php?$query_string;
+        return 301 https://$server_name$request_uri;
     }
 
     # PHP-FPM configuration
@@ -89,7 +82,8 @@ server {
     # Include all other rewrite rules from nginx.conf
     include /etc/nginx/conf.d/rewrites.inc;
 
-    # Deny access to sensitive directories
+    # Deny access to sensitive directories (nhưng cho phép .well-known)
+    # Note: .well-known đã được xử lý ở location block riêng ở trên với priority cao hơn
     location ~ /\. {
         deny all;
         access_log off;
@@ -101,3 +95,133 @@ server {
         return 404;
     }
 }
+
+# HTTPS server - sẽ được enable sau khi có SSL certificate
+# Uncomment phần này sau khi chạy ssl-setup.sh thành công
+#server {
+#    listen 443 ssl;
+#    http2 on;
+#    server_name goivondautu.delitech.vn;
+#    
+#    # SSL certificates
+#    ssl_certificate /etc/letsencrypt/live/goivondautu.delitech.vn/fullchain.pem;
+#    ssl_certificate_key /etc/letsencrypt/live/goivondautu.delitech.vn/privkey.pem;
+#    
+#    # SSL configuration
+#    ssl_protocols TLSv1.2 TLSv1.3;
+#    ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384';
+#    ssl_prefer_server_ciphers off;
+#    ssl_session_cache shared:SSL:10m;
+#    ssl_session_timeout 10m;
+#    ssl_stapling on;
+#    ssl_stapling_verify on;
+#    
+#    # Security headers
+#    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+#    add_header X-Frame-Options "SAMEORIGIN" always;
+#    add_header X-Content-Type-Options "nosniff" always;
+#    add_header X-XSS-Protection "1; mode=block" always;
+#    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+#    
+#    root /var/www/html;
+#    index index.php index.html;
+#
+#    client_max_body_size 100M;
+#    
+#    # Logging
+#    access_log /var/log/nginx/goivondautu.access.log;
+#    error_log /var/log/nginx/goivondautu.error.log;
+#
+#    # Main location block
+#    location / {
+#        if (!-e $request_filename){
+#            rewrite ^/password-reset/([^\/]+)(\/|)$ /index.php?link1=welcome&link2=password_reset&user_id=$1;
+#        }
+#        rewrite ^/$ /index.php?link1=home;
+#        rewrite "^/forum/members/([a-zA-Z]{0,1})(/?|)$" /index.php?link1=forum-members-byname&char=$1;
+#        if (!-e $request_filename){
+#            rewrite ^/setting/([A-Za-z0-9_-]+)$ /index.php?link1=setting&page=$1;
+#        }
+#        if (!-e $request_filename){
+#            rewrite ^/@([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1;
+#        }
+#        if (!-e $request_filename){
+#            rewrite ^/([A-Za-z0-9_]+)/([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1&type=$2;
+#        }
+#        if (!-e $request_filename){
+#            rewrite ^/([^\/]+)(\/|)$ /index.php?link1=timeline&u=$1;
+#        }
+#        try_files $uri $uri/ /index.php?$query_string;
+#    }
+#
+#    # PHP-FPM configuration
+#    location ~ \.php$ {
+#        fastcgi_pass php:9000;
+#        fastcgi_index index.php;
+#        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+#        include fastcgi_params;
+#        fastcgi_read_timeout 300;
+#        fastcgi_buffer_size 128k;
+#        fastcgi_buffers 4 256k;
+#        fastcgi_busy_buffers_size 256k;
+#    }
+#
+#    # Socket.IO proxy
+#    location /socket.io/ {
+#        proxy_pass http://nodejs:3000;
+#        proxy_http_version 1.1;
+#        proxy_set_header Upgrade $http_upgrade;
+#        proxy_set_header Connection "upgrade";
+#        proxy_set_header Host $host;
+#        proxy_set_header X-Real-IP $remote_addr;
+#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#        proxy_set_header X-Forwarded-Proto $scheme;
+#        proxy_read_timeout 86400;
+#    }
+#
+#    # Static files
+#    location ~* \.(jpg|jpeg|gif|png|css|js|ico|svg|woff|woff2|ttf|eot)$ {
+#        expires 1y;
+#        add_header Cache-Control "public, immutable";
+#        access_log off;
+#    }
+#
+#    # Admin routes
+#    location /admin {
+#        rewrite ^/admin$ /admincp.php last;
+#        rewrite ^/admin/$ /admincp.php last;
+#        rewrite ^/admin-cp$ /admincp.php last;
+#        rewrite ^/admin-cp/(.*)$ /admincp.php?page=$1 last;
+#        rewrite ^/admin/ads/edit/(\d+)(/?|)$ /index.php?link1=manage-ads&id=$1 last;
+#    }
+#
+#    location = /admincp {
+#        rewrite ^(.*)$ /admincp.php;
+#    }
+#
+#    location /admincp {
+#        rewrite ^/admincp/(.*)$ /admincp.php?page=$1;
+#    }
+#
+#    location /adminPages/ {
+#        alias /var/www/html/admin-panel/;
+#    }
+#
+#    # Include all other rewrite rules from nginx.conf
+#    include /etc/nginx/conf.d/rewrites.inc;
+#
+#    # Deny access to sensitive directories
+#    location ~ /\. {
+#        deny all;
+#        access_log off;
+#        log_not_found off;
+#    }
+#
+#    location ~ /(cache|sources|assets|nodejs) {
+#        deny all;
+#        return 404;
+#    }
+#}
+
+# Include HTTPS configuration
+include /etc/nginx/conf.d/goivondautu.delitech.vn.https;
