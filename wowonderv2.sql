@@ -7376,3 +7376,6 @@ INSERT INTO wowonder.Wo_Users
 VALUES 
 (1, 'admin', 'admin@admin.com', '$2y$10$D3X145NFSDRwbN6E5yaA4.pnPwRS8A9ny83cTAvf6ggW/7zq99JYi', '', '', 'upload/photos/d-avatar.jpg', 'upload/photos/d-cover.jpg', '', '0', 0, '', '', '', null, '', 'male', '0000-00-00', 0, '', '', '', '', '', '', '', '', null, null, null, null, '', 'vietnamese', '8d7c39487173c240b827aed6ca5f8faf', 'site', '171.247.189.224', '0', '0', 'ifollow', '0', '0', '1', '0', '0', '0', 1764302264, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '{"e_liked":1,"e_shared":1,"e_wondered":0,"e_commented":1,"e_followed":1,"e_accepted":1,"e_mentioned":1,"e_joined_group":1,"e_liked_page":1,"e_visited":1,"e_profile_wall_post":1,"e_memory":1}', '0', '1', '1', 'admin', '11/2025', '1', '1', '1', '1', 0, '', 0, '0', 0, 0, '', 1764302077, '', '', 0, 0, null, '0', '', '0', '0', '0', '', '', '', '', '', '0.00', '0', '0', '0', 1, 0, '{"post_count":0,"album_count":0,"following_count":0,"followers_count":0,"groups_count":0,"likes_count":0}', null, 0, 0, 0, 0, 0, '', 0, 1, null, 0, '', '', 0, '', '', '', '', '', 0, 'us', '', 0, 0, null, null, null, '', 0, '', 0, '', '', 'two_factor', '0');
 
+
+
+

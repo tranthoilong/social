@@ -243,6 +243,15 @@ function Wo_CustomCode($a = false, $code = array()) {
     }
     return $result;
 }
+// Helper function for translation in admin panel
+function Wo_Translate($key, $default = '') {
+    global $wo;
+    if (!empty($wo['lang'][$key])) {
+        return $wo['lang'][$key];
+    }
+    return !empty($default) ? $default : $key;
+}
+
 function Wo_LoadAdminPage($page_url = '') {
     global $wo, $db;
     $page         = './admin-panel/pages/' . $page_url . '.phtml';

@@ -221,16 +221,16 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
 ?>
 <div class="container-fluid">
     <div>
-        <h3>Manage Users</h3>
+        <h3><?php echo Wo_Translate('manage_users', 'Manage Users'); ?></h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="#"><?php echo Wo_Translate('home', 'Home'); ?></a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="#">Users</a>
+                    <a href="#"><?php echo Wo_Translate('users', 'Users'); ?></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Manage Users</li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo Wo_Translate('manage_users', 'Manage Users'); ?></li>
             </ol>
         </nav>
     </div>
@@ -258,7 +258,7 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
           <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">ACTIVE USERS</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('active_users', 'ACTIVE USERS'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -275,7 +275,7 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">INACTIVE USERS</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('inactive_users', 'INACTIVE USERS'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -300,10 +300,10 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
                             }else if (!empty($start) && !empty($end)){
                                 echo $_GET['range'];
                             }else{
-                                echo 'All';
+                                echo Wo_Translate('all', 'All');
                             } ?>
                         </div>
-                  <h6 class="card-title">Manage & Edit Users</h6>
+                  <h6 class="card-title"><?php echo Wo_Translate('manage_edit_users', 'Manage & Edit Users'); ?></h6>
                     <div class="row">
                       <div class="col-md-12">
                          <div class="site-settings-alert"></div>
@@ -315,7 +315,7 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
                               <div class="form-group form-float">
                                   <div class="form-line">
                                     <label class="form-label search-form">
-                                        Search for Username, E-mail, First or Last Name
+                                        <?php echo Wo_Translate('search_user_placeholder', 'Search for Username, E-mail, First or Last Name'); ?>
                                       </label>
                                       <input type="text" name="query" id="query" class="form-control" value="<?php echo($filter_keyword); ?>">
                                   </div>
@@ -325,21 +325,21 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
                               <div class="form-group form-float">
                                   <div class="form-line">
                                     <label class="form-label search-form">
-                                        Type
+                                        <?php echo Wo_Translate('type', 'Type'); ?>
                                       </label>
                                         <select class="form-control show-tick " id="user_type" name="user_type">
-                                            <option value="all">All</option>
-                                            <option value="active" <?php echo ((!empty($_GET['user_type']) && $_GET['user_type'] == 'active') ? 'selected' : ''); ?>>Active</option>
-                                            <option value="inactive" <?php echo ((!empty($_GET['user_type']) && $_GET['user_type'] == 'inactive') ? 'selected' : ''); ?>>Inactive</option>
-                                            <option value="online" <?php echo ((!empty($_GET['user_type']) && $_GET['user_type'] == 'online') ? 'selected' : ''); ?>>Online</option>
-                                            <option value="offline" <?php echo ((!empty($_GET['user_type']) && $_GET['user_type'] == 'offline') ? 'selected' : ''); ?>>Offline</option>
+                                            <option value="all"><?php echo Wo_Translate('all', 'All'); ?></option>
+                                            <option value="active" <?php echo ((!empty($_GET['user_type']) && $_GET['user_type'] == 'active') ? 'selected' : ''); ?>><?php echo Wo_Translate('active', 'Active'); ?></option>
+                                            <option value="inactive" <?php echo ((!empty($_GET['user_type']) && $_GET['user_type'] == 'inactive') ? 'selected' : ''); ?>><?php echo Wo_Translate('inactive', 'Inactive'); ?></option>
+                                            <option value="online" <?php echo ((!empty($_GET['user_type']) && $_GET['user_type'] == 'online') ? 'selected' : ''); ?>><?php echo Wo_Translate('online', 'Online'); ?></option>
+                                            <option value="offline" <?php echo ((!empty($_GET['user_type']) && $_GET['user_type'] == 'offline') ? 'selected' : ''); ?>><?php echo Wo_Translate('offline', 'Offline'); ?></option>
                                         </select>
                                   </div>
                               </div>
                             </div>
                             <div class="col-md-1">
                               <label>&nbsp;</label>
-                               <button class="btn btn-info">Search</button>
+                               <button class="btn btn-info"><?php echo Wo_Translate('search', 'Search'); ?></button>
                             </div>
                           </div>
                           <div class="clearfix"></div>
@@ -396,7 +396,7 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
                     <div class="wo-admincp-feturepager">
                       <div class="pull-left">
                         <span>
-                          <?php echo "Showing $page out of " . $db->totalPages; ?>
+                          <?php echo Wo_Translate('showing_page', 'Showing') . " $page " . Wo_Translate('out_of', 'out of') . " " . $db->totalPages; ?>
                         </span>
                       </div>
                       <div class="pull-right">

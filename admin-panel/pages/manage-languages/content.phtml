@@ -1,15 +1,15 @@
 <div class="container-fluid">
     <div>
-        <h3>Manage Languages</h3>
+        <h3><?php echo Wo_Translate('manage_languages', 'Manage Languages'); ?></h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="#"><?php echo Wo_Translate('home', 'Home'); ?></a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="#">Languages</a>
+                    <a href="#"><?php echo Wo_Translate('languages', 'Languages'); ?></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Manage Languages</li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo Wo_Translate('manage_languages', 'Manage Languages'); ?></li>
             </ol>
         </nav>
     </div>
@@ -18,16 +18,16 @@
         <div class="col-lg-6 col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Manage & Edit Languages</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('manage_edit_languages', 'Manage & Edit Languages'); ?></h6>
                     <div class="langs-settings-alert"></div>
-                    <div class="alert alert-info">You can manage, edit and delete languages.</div>
+                    <div class="alert alert-info"><?php echo Wo_Translate('manage_languages_desc', 'You can manage, edit and delete languages.'); ?></div>
                    <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover" style="table-layout: inherit; border-top: 1px solid;">
                             <thead>
                                 <tr>
                                     <th><input type="checkbox" id="check-all" class="filled-in check-all" ><label for="check-all"></label></th>
-                                    <th style="text-align: center;">Language Name</th>
-                                    <th style="text-align: center;">Action</th>
+                                    <th style="text-align: center;"><?php echo Wo_Translate('language_name', 'Language Name'); ?></th>
+                                    <th style="text-align: center;"><?php echo Wo_Translate('action', 'Action'); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,7 +47,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-3">
                             <span>&nbsp;</span>
-                            <button type="button" class="btn btn-info waves-effect delete-selected d-block" disabled>Delete Selected <span></span></button>
+                            <button type="button" class="btn btn-info waves-effect delete-selected d-block" disabled><?php echo Wo_Translate('delete_selected', 'Delete Selected'); ?> <span></span></button>
                         </div>
                     </div>
                 </div>

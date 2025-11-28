@@ -63,6 +63,52 @@ $wo['decode_ios_value']  = base64_decode('I2FhYQ==');
 
 $wo['decode_windwos_v']  = $wo['config']['footer_text_color'];
 $wo['decode_windwos_value']  = base64_decode('I2RkZA==');
+
+// Load Language for Admin Panel
+$langs = Wo_LangsNamesFromDB();
+$selected_lang = 'english';
+
+// Get language from user setting if available and valid
+if (!empty($wo['user']['language']) && is_array($langs) && in_array($wo['user']['language'], $langs)) {
+    $selected_lang = $wo['user']['language'];
+    $_SESSION['lang'] = $selected_lang;
+}
+// Get from session if available and valid
+elseif (!empty($_SESSION['lang']) && is_array($langs) && in_array($_SESSION['lang'], $langs)) {
+    $selected_lang = $_SESSION['lang'];
+}
+// Use default language
+else {
+    $selected_lang = !empty($wo['config']['defualtLang']) ? $wo['config']['defualtLang'] : 'english';
+    // Validate default language exists in database
+    if (!in_array($selected_lang, $langs)) {
+        $selected_lang = 'english';
+    }
+    $_SESSION['lang'] = $selected_lang;
+}
+
+$wo['language'] = $selected_lang;
+$wo['language_type'] = 'ltr';
+// Add rtl languages here.
+$rtl_langs = array('arabic', 'urdu', 'hebrew', 'persian');
+foreach ($rtl_langs as $lang) {
+    if ($wo['language'] == strtolower($lang)) {
+        $wo['language_type'] = 'rtl';
+    }
+}
+// Include Language File
+$wo['lang'] = Wo_LangsFromDB($wo['language']);
+if (file_exists('assets/languages/extra/' . $wo['language'] . '.php')) {
+    require 'assets/languages/extra/' . $wo['language'] . '.php';
+}
+// Fallback to english if language not found
+if (empty($wo['lang']) || !is_array($wo['lang']) || count($wo['lang']) == 0) {
+    $wo['lang'] = Wo_LangsFromDB('english');
+    if (file_exists('assets/languages/extra/english.php')) {
+        require 'assets/languages/extra/english.php';
+    }
+}
+
 $data = array();
 $wo['script_root'] = dirname(__FILE__);
 $text = Wo_LoadAdminPage($page . '/content');

@@ -40,21 +40,21 @@
       </div>
    </td>
    <td>
-      <button class="btn bg-success admn_table_btn" onclick="Wo_MarkSafeReportedPost(<?php echo $wo['report']['id']?>,'hide');">Mark Safe</button>
+      <button class="btn bg-success admn_table_btn" onclick="Wo_MarkSafeReportedPost(<?php echo $wo['report']['id']?>,'hide');"><?php echo Wo_Translate('mark_safe', 'Mark Safe'); ?></button>
       <?php if ($wo['report']['type'] == 'post'): ?>
-         <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['story']['id']?>,<?php echo $wo['report']['id']?>,'post','hide');">Delete</button>
+         <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['story']['id']?>,<?php echo $wo['report']['id']?>,'post','hide');"><?php echo Wo_Translate('delete', 'Delete'); ?></button>
       <?php elseif($wo['report']['type'] == 'profile'): ?>
-          <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['user']['id']?>,<?php echo $wo['report']['id']?>,'user','hide');">Delete</button>
-          <button class="btn bg-info admn_table_btn" onclick="$('#read_report').modal().find('.report_text').text('<?php echo htmlspecialchars($wo['report']['text']); ?>')">View Report</button>
+          <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['user']['id']?>,<?php echo $wo['report']['id']?>,'user','hide');"><?php echo Wo_Translate('delete', 'Delete'); ?></button>
+          <button class="btn bg-info admn_table_btn" onclick="$('#read_report').modal().find('.report_text').text('<?php echo htmlspecialchars($wo['report']['text']); ?>')"><?php echo Wo_Translate('view_report', 'View Report'); ?></button>
       <?php elseif($wo['report']['type'] == 'page'): ?>
-         <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['page']['page_id']?>,<?php echo $wo['report']['id']?>,'page','hide');">Delete</button>
-         <button class="btn bg-info admn_table_btn" onclick="$('#read_report').modal().find('.report_text').text('<?php echo htmlspecialchars($wo['report']['text']); ?>')">View Report</button>
+         <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['page']['page_id']?>,<?php echo $wo['report']['id']?>,'page','hide');"><?php echo Wo_Translate('delete', 'Delete'); ?></button>
+         <button class="btn bg-info admn_table_btn" onclick="$('#read_report').modal().find('.report_text').text('<?php echo htmlspecialchars($wo['report']['text']); ?>')"><?php echo Wo_Translate('view_report', 'View Report'); ?></button>
       <?php elseif($wo['report']['type'] == 'group'): ?>
-         <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['group']['id']?>,<?php echo $wo['report']['id']?>,'group','hide');">Delete</button>
-         <button class="btn bg-info admn_table_btn" onclick="$('#read_report').modal().find('.report_text').text('<?php echo htmlspecialchars($wo['report']['text']); ?>')">View Report</button>
+         <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['group']['id']?>,<?php echo $wo['report']['id']?>,'group','hide');"><?php echo Wo_Translate('delete', 'Delete'); ?></button>
+         <button class="btn bg-info admn_table_btn" onclick="$('#read_report').modal().find('.report_text').text('<?php echo htmlspecialchars($wo['report']['text']); ?>')"><?php echo Wo_Translate('view_report', 'View Report'); ?></button>
       <?php elseif($wo['report']['type'] == 'comment'): ?>
-         <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['comment']['id']?>,<?php echo $wo['report']['id']?>,'comment','hide');">Delete</button>
-         <button class="btn bg-info admn_table_btn" onclick="$('#read_report').modal().find('.report_text').text('<?php echo htmlspecialchars($wo['report']['comment']['Orginaltext']); ?>')">View Report</button>
+         <button class="btn bg-danger admn_table_btn" onclick="Wo_DeleteReportedContent(<?php echo $wo['report']['comment']['id']?>,<?php echo $wo['report']['id']?>,'comment','hide');"><?php echo Wo_Translate('delete', 'Delete'); ?></button>
+         <button class="btn bg-info admn_table_btn" onclick="$('#read_report').modal().find('.report_text').text('<?php echo htmlspecialchars($wo['report']['comment']['Orginaltext']); ?>')"><?php echo Wo_Translate('view_report', 'View Report'); ?></button>
       <?php endif; ?>
    </td>
 </tr>

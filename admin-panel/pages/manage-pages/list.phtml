@@ -16,7 +16,7 @@
    </td>
    <td><?php echo $wo['pagelist']['category'];?></td>
    <td>
-      <a target = "_blank" class="btn bg-info admn_table_btn" href="<?php echo Wo_SeoLink('index.php?link1=page-setting&page=' . $wo['pagelist']['page_name']) ?>">Edit</a>
-      <button onclick="Wo_DeletePage(<?php echo $wo['pagelist']['page_id']?>,'hide');" type="button" class="btn bg-danger admn_table_btn">Delete</button>
+      <a target = "_blank" class="btn bg-info admn_table_btn" href="<?php echo Wo_SeoLink('index.php?link1=page-setting&page=' . $wo['pagelist']['page_name']) ?>"><?php echo Wo_Translate('edit', 'Edit'); ?></a>
+      <button onclick="Wo_DeletePage(<?php echo $wo['pagelist']['page_id']?>,'hide');" type="button" class="btn bg-danger admn_table_btn"><?php echo Wo_Translate('delete', 'Delete'); ?></button>
    </td>
 </tr>

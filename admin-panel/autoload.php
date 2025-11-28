@@ -1,5 +1,51 @@
 <?php
 cleanConfigData();
+
+// Load Language for Admin Panel
+$langs = Wo_LangsNamesFromDB();
+$selected_lang = 'english';
+
+// Get language from user setting if available and valid
+if (!empty($wo['user']['language']) && is_array($langs) && in_array($wo['user']['language'], $langs)) {
+    $selected_lang = $wo['user']['language'];
+    $_SESSION['lang'] = $selected_lang;
+}
+// Get from session if available and valid
+elseif (!empty($_SESSION['lang']) && is_array($langs) && in_array($_SESSION['lang'], $langs)) {
+    $selected_lang = $_SESSION['lang'];
+}
+// Use default language
+else {
+    $selected_lang = !empty($wo['config']['defualtLang']) ? $wo['config']['defualtLang'] : 'english';
+    // Validate default language exists in database
+    if (!in_array($selected_lang, $langs)) {
+        $selected_lang = 'english';
+    }
+    $_SESSION['lang'] = $selected_lang;
+}
+
+$wo['language'] = $selected_lang;
+$wo['language_type'] = 'ltr';
+// Add rtl languages here.
+$rtl_langs = array('arabic', 'urdu', 'hebrew', 'persian');
+foreach ($rtl_langs as $lang) {
+    if ($wo['language'] == strtolower($lang)) {
+        $wo['language_type'] = 'rtl';
+    }
+}
+// Include Language File
+$wo['lang'] = Wo_LangsFromDB($wo['language']);
+if (file_exists('assets/languages/extra/' . $wo['language'] . '.php')) {
+    require 'assets/languages/extra/' . $wo['language'] . '.php';
+}
+// Fallback to english if language not found
+if (empty($wo['lang']) || !is_array($wo['lang']) || count($wo['lang']) == 0) {
+    $wo['lang'] = Wo_LangsFromDB('english');
+    if (file_exists('assets/languages/extra/english.php')) {
+        require 'assets/languages/extra/english.php';
+    }
+}
+
 $page  = 'dashboard';
 $wo['all_pages'] = scandir('admin-panel/pages');
 unset($wo['all_pages'] [0]);
@@ -613,7 +659,7 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
         <!-- begin::navigation -->
         <div class="navigation">
             <div class="navigation-header">
-                <span>Navigation</span>
+                <span><?php echo Wo_Translate('navigation', 'Navigation'); ?></span>
                 <a href="#">
                     <i class="ti-close"></i>
                 </a>
@@ -626,7 +672,7 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">dashboard</i>
                             </span>
-                            <span>Dashboard</span>
+                            <span><?php echo Wo_Translate('dashboard', 'Dashboard'); ?></span>
                         </a>
                     </li>
                     <?php } ?>
@@ -637,88 +683,88 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">settings</i>
                             </span>
-                            <span>Settings</span>
+                            <span><?php echo Wo_Translate('settings', 'Settings'); ?></span>
                         </a>
                         <ul class="ml-menu">
                           <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['website_mode'] == 1)) { ?>
                           <li>
-                              <a <?php echo ($page == 'website_mode') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('website_mode'); ?>" data-ajax="?path=website_mode">Website Mode</a>
+                              <a <?php echo ($page == 'website_mode') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('website_mode'); ?>" data-ajax="?path=website_mode"><?php echo Wo_Translate('website_mode', 'Website Mode'); ?></a>
                           </li>
                           <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['general-settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'general-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('general-settings'); ?>" data-ajax="?path=general-settings">General Configuration</a>
+                                <a <?php echo ($page == 'general-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('general-settings'); ?>" data-ajax="?path=general-settings"><?php echo Wo_Translate('general_configuration', 'General Configuration'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['site-settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'site-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('site-settings'); ?>" data-ajax="?path=site-settings">Website Information</a>
+                                <a <?php echo ($page == 'site-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('site-settings'); ?>" data-ajax="?path=site-settings"><?php echo Wo_Translate('website_information', 'Website Information'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['amazon-settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'amazon-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('amazon-settings'); ?>" data-ajax="?path=amazon-settings">File Upload Configuration</a>
+                                <a <?php echo ($page == 'amazon-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('amazon-settings'); ?>" data-ajax="?path=amazon-settings"><?php echo Wo_Translate('file_upload_configuration', 'File Upload Configuration'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['email-settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'email-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('email-settings'); ?>" data-ajax="?path=email-settings">E-mail & SMS Setup</a>
+                                <a <?php echo ($page == 'email-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('email-settings'); ?>" data-ajax="?path=email-settings"><?php echo Wo_Translate('email_sms_setup', 'E-mail & SMS Setup'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['video-settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'video-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('video-settings'); ?>" data-ajax="?path=video-settings">Chat & Video/Audio</a>
+                                <a <?php echo ($page == 'video-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('video-settings'); ?>" data-ajax="?path=video-settings"><?php echo Wo_Translate('chat_video_audio', 'Chat & Video/Audio'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['social-login'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'social-login') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('social-login'); ?>" data-ajax="?path=social-login">Social Login Settings</a>
+                                <a <?php echo ($page == 'social-login') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('social-login'); ?>" data-ajax="?path=social-login"><?php echo Wo_Translate('social_login_settings', 'Social Login Settings'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['node'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'node') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('node'); ?>" data-ajax="?path=node">NodeJS Settings</a>
+                                <a <?php echo ($page == 'node') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('node'); ?>" data-ajax="?path=node"><?php echo Wo_Translate('nodejs_settings', 'NodeJS Settings'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['cronjob_settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'cronjob_settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('cronjob_settings'); ?>" data-ajax="?path=cronjob_settings">CronJob Settings</a>
+                                <a <?php echo ($page == 'cronjob_settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('cronjob_settings'); ?>" data-ajax="?path=cronjob_settings"><?php echo Wo_Translate('cronjob_settings', 'CronJob Settings'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['ai-settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'ai-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('ai-settings'); ?>" data-ajax="?path=ai-settings">AI Settings</a>
+                                <a <?php echo ($page == 'ai-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('ai-settings'); ?>" data-ajax="?path=ai-settings"><?php echo Wo_Translate('ai_settings', 'AI Settings'); ?></a>
                             </li>
                             <?php } ?>
 
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['post-settings'] == 1 || $wo['user']['permission']['manage-colored-posts'] == 1 || $wo['user']['permission']['manage-reactions'] == 1 || $wo['user']['permission']['live'] == 1))) { ?>
                             <li>
-                                <a <?php echo ($page == 'post-settings' || $page == 'manage-colored-posts' || $page == 'manage-reactions') ? 'class="open"' : ''; ?> href="javascript:void(0);">Posts Settings</a>
+                                <a <?php echo ($page == 'post-settings' || $page == 'manage-colored-posts' || $page == 'manage-reactions') ? 'class="open"' : ''; ?> href="javascript:void(0);"><?php echo Wo_Translate('posts_settings', 'Posts Settings'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['post-settings'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'post-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('post-settings'); ?>" data-ajax="?path=post-settings">
-                                            <span>Posts Settings</span>
+                                            <span><?php echo Wo_Translate('posts_settings', 'Posts Settings'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-colored-posts'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-colored-posts') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-colored-posts'); ?>" data-ajax="?path=manage-colored-posts">
-                                            <span>Manage Colored Posts</span>
+                                            <span><?php echo Wo_Translate('manage_colored_posts', 'Manage Colored Posts'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-reactions'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-reactions') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-reactions'); ?>" data-ajax="?path=manage-reactions">
-                                            <span>Post Reactions</span>
+                                            <span><?php echo Wo_Translate('post_reactions', 'Post Reactions'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['live'] == 1)) { ?>
                                     <li>
-                                        <a <?php echo ($page == 'live') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('live'); ?>" data-ajax="?path=live">Setup Live Streaming</a>
+                                        <a <?php echo ($page == 'live') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('live'); ?>" data-ajax="?path=live"><?php echo Wo_Translate('setup_live_streaming', 'Setup Live Streaming'); ?></a>
                                     </li>
                                     <?php } ?>
                                 </ul>
@@ -735,94 +781,94 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">view_agenda</i>
                             </span>
-                            <span>Manage Features</span>
+                            <span><?php echo Wo_Translate('manage_features', 'Manage Features'); ?></span>
                         </a>
 
                         <ul class="ml-menu">
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['site-features'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'site-features') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('site-features'); ?>" data-ajax="?path=site-features">Enable / Disable Features</a>
+                                <a <?php echo ($page == 'site-features') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('site-features'); ?>" data-ajax="?path=site-features"><?php echo Wo_Translate('enable_disable_features', 'Enable / Disable Features'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-apps'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-apps') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-apps'); ?>" data-ajax="?path=manage-apps">Applications</a>
+                                <a <?php echo ($page == 'manage-apps') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-apps'); ?>" data-ajax="?path=manage-apps"><?php echo Wo_Translate('applications', 'Applications'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-pages'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-pages') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-pages'); ?>" data-ajax="?path=manage-pages">Pages</a>
+                                <a <?php echo ($page == 'manage-pages') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-pages'); ?>" data-ajax="?path=manage-pages"><?php echo Wo_Translate('pages', 'Pages'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-groups'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-groups') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-groups'); ?>" data-ajax="?path=manage-groups">Groups</a>
+                                <a <?php echo ($page == 'manage-groups') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-groups'); ?>" data-ajax="?path=manage-groups"><?php echo Wo_Translate('groups', 'Groups'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-posts'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-posts') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-posts'); ?>" data-ajax="?path=manage-posts">Posts</a>
+                                <a <?php echo ($page == 'manage-posts') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-posts'); ?>" data-ajax="?path=manage-posts"><?php echo Wo_Translate('posts', 'Posts'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-fund'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-fund') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-fund'); ?>" data-ajax="?path=manage-fund">Fundings</a>
+                                <a <?php echo ($page == 'manage-fund') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-fund'); ?>" data-ajax="?path=manage-fund"><?php echo Wo_Translate('fundings', 'Fundings'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-jobs'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-jobs') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-jobs'); ?>" data-ajax="?path=manage-jobs">Jobs</a>
+                                <a <?php echo ($page == 'manage-jobs') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-jobs'); ?>" data-ajax="?path=manage-jobs"><?php echo Wo_Translate('jobs', 'Jobs'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-offers'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-offers') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-offers'); ?>" data-ajax="?path=manage-offers">Offers</a>
+                                <a <?php echo ($page == 'manage-offers') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-offers'); ?>" data-ajax="?path=manage-offers"><?php echo Wo_Translate('offers', 'Offers'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-articles'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-articles') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-articles'); ?>" data-ajax="?path=manage-articles">Articles (Blog)</a>
+                                <a <?php echo ($page == 'manage-articles') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-articles'); ?>" data-ajax="?path=manage-articles"><?php echo Wo_Translate('articles_blog', 'Articles (Blog)'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-events'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-events') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-events'); ?>" data-ajax="?path=manage-events">Events</a>
+                                <a <?php echo ($page == 'manage-events') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-events'); ?>" data-ajax="?path=manage-events"><?php echo Wo_Translate('events', 'Events'); ?></a>
                             </li>
                             <?php } ?>
                                 <li>
-                                    <a <?php echo ($page == 'manage-events') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-content-monetization'); ?>" data-ajax="?path=manage-content-monetization">Content Monetization</a>
+                                    <a <?php echo ($page == 'manage-events') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-content-monetization'); ?>" data-ajax="?path=manage-content-monetization"><?php echo Wo_Translate('content_monetization', 'Content Monetization'); ?></a>
                                 </li>
 
 
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['store-settings'] == 1 || $wo['user']['permission']['manage-products'] == 1 || $wo['user']['permission']['manage-orders'] == 1 || $wo['user']['permission']['manage-reviews'] == 1))) { ?>
                             <li <?php echo ($page == 'store-settings' || $page == 'manage-products' || $page == 'manage-orders' || $page == 'manage-reviews') ? 'class="open"' : ''; ?>>
-                                <a href="javascript:void(0);">Store</a>
+                                <a href="javascript:void(0);"><?php echo Wo_Translate('store', 'Store'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['store-settings'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'store-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('store-settings'); ?>" data-ajax="?path=store-settings">
-                                            <span>Store Settings</span>
+                                            <span><?php echo Wo_Translate('store_settings', 'Store Settings'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-products'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-products') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-products'); ?>" data-ajax="?path=manage-products">
-                                            <span>Manage Products</span>
+                                            <span><?php echo Wo_Translate('manage_products', 'Manage Products'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-orders'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-orders') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-orders'); ?>" data-ajax="?path=manage-orders">
-                                            <span>Manage Orders</span>
+                                            <span><?php echo Wo_Translate('manage_orders', 'Manage Orders'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-reviews'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-reviews') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-reviews'); ?>" data-ajax="?path=manage-reviews">
-                                            <span>Manage Reviews</span>
+                                            <span><?php echo Wo_Translate('manage_reviews', 'Manage Reviews'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -840,47 +886,47 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
 
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['manage-forum-sections'] == 1 || $wo['user']['permission']['manage-forum-forums'] == 1 || $wo['user']['permission']['manage-forum-threads'] == 1 || $wo['user']['permission']['manage-forum-messages'] == 1 || $wo['user']['permission']['create-new-forum'] == 1 || $wo['user']['permission']['create-new-section'] == 1 ))) { ?>
                             <li <?php echo ($page == 'manage-forum-sections' || $page == 'manage-forum-forums' || $page == 'manage-forum-threads' || $page == 'manage-forum-messages' || $page == 'create-new-forum' || $page == 'create-new-section') ? 'class="open"' : ''; ?>>
-                                <a href="javascript:void(0);">Forums</a>
+                                <a href="javascript:void(0);"><?php echo Wo_Translate('forums', 'Forums'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-forum-sections'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-forum-sections') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-forum-sections'); ?>" data-ajax="?path=manage-forum-sections">
-                                            <span>Manage Forums Sections</span>
+                                            <span><?php echo Wo_Translate('manage_forums_sections', 'Manage Forums Sections'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-forum-forums'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-forum-forums') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-forum-forums'); ?>" data-ajax="?path=manage-forum-forums">
-                                            <span>Manage Forums</span>
+                                            <span><?php echo Wo_Translate('manage_forums', 'Manage Forums'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-forum-threads'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-forum-threads') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-forum-threads'); ?>" data-ajax="?path=manage-forum-threads">
-                                            <span>Manage Threads</span>
+                                            <span><?php echo Wo_Translate('manage_threads', 'Manage Threads'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-forum-messages'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-forum-messages') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-forum-messages'); ?>" data-ajax="?path=manage-forum-messages">
-                                            <span>Manage Replies</span>
+                                            <span><?php echo Wo_Translate('manage_replies', 'Manage Replies'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['create-new-section'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'create-new-section') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('create-new-section'); ?>" data-ajax="?path=create-new-section">
-                                            <span>Create New Section</span>
+                                            <span><?php echo Wo_Translate('create_new_section', 'Create New Section'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['create-new-forum'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'create-new-forum') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('create-new-forum'); ?>" data-ajax="?path=create-new-forum">
-                                            <span>Create New Forum</span>
+                                            <span><?php echo Wo_Translate('create_new_forum', 'Create New Forum'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -889,19 +935,19 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['manage-movies'] == 1 || $wo['user']['permission']['add-new-movies'] == 1 ))) { ?>
                             <li <?php echo ($page == 'manage-movies' || $page == 'add-new-movies') ? 'class="open"' : ''; ?>>
-                                <a href="javascript:void(0);">Movies</a>
+                                <a href="javascript:void(0);"><?php echo Wo_Translate('movies', 'Movies'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-movies'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-movies') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-movies'); ?>" data-ajax="?path=manage-movies">
-                                            <span>Manage Movies</span>
+                                            <span><?php echo Wo_Translate('manage_movies', 'Manage Movies'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['add-new-movies'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'add-new-movies') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('add-new-movies'); ?>" data-ajax="?path=add-new-movies">
-                                            <span>Add New Movie</span>
+                                            <span><?php echo Wo_Translate('add_new_movie', 'Add New Movie'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -911,19 +957,19 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['manage-games'] == 1 || $wo['user']['permission']['add-new-game'] == 1 ))) { ?>
 
                             <li <?php echo ($page == 'manage-games' || $page == 'add-new-game') ? 'class="open"' : ''; ?>>
-                                <a href="javascript:void(0);">Games</a>
+                                <a href="javascript:void(0);"><?php echo Wo_Translate('games', 'Games'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-games'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-games') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-games'); ?>" data-ajax="?path=manage-games">
-                                            <span>Manage Games</span>
+                                            <span><?php echo Wo_Translate('manage_games', 'Manage Games'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['add-new-game'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'add-new-game') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('add-new-game'); ?>" data-ajax="?path=add-new-game">
-                                            <span>Add New Game</span>
+                                            <span><?php echo Wo_Translate('add_new_game', 'Add New Game'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -932,61 +978,61 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['pages-categories'] == 1 || $wo['user']['permission']['pages-sub-categories'] == 1 || $wo['user']['permission']['groups-sub-categories'] == 1 || $wo['user']['permission']['products-sub-categories'] == 1 || $wo['user']['permission']['groups-categories'] == 1 || $wo['user']['permission']['blogs-categories'] == 1 || $wo['user']['permission']['products-categories'] == 1 ))) { ?>
                             <li <?php echo ($page == 'pages-categories' || $page == 'pages-sub-categories' || $page == 'groups-sub-categories' || $page == 'products-sub-categories' || $page == 'groups-categories' || $page == 'blogs-categories' || $page == 'products-categories') ? 'class="open"' : ''; ?>>
-                                <a href="javascript:void(0);">Categories</a>
+                                <a href="javascript:void(0);"><?php echo Wo_Translate('categories', 'Categories'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['pages-categories'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'pages-categories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pages-categories'); ?>" data-ajax="?path=pages-categories">
-                                            <span>Pages Categories</span>
+                                            <span><?php echo Wo_Translate('pages_categories', 'Pages Categories'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['pages-sub-categories'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'pages-sub-categories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pages-sub-categories'); ?>" data-ajax="?path=pages-sub-categories">
-                                            <span>Pages Sub Categories</span>
+                                            <span><?php echo Wo_Translate('pages_sub_categories', 'Pages Sub Categories'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['groups-categories'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'groups-categories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('groups-categories'); ?>" data-ajax="?path=groups-categories">
-                                            <span>Groups Categories</span>
+                                            <span><?php echo Wo_Translate('groups_categories', 'Groups Categories'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['groups-sub-categories'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'groups-sub-categories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('groups-sub-categories'); ?>" data-ajax="?path=groups-sub-categories">
-                                            <span>Groups Sub Categories</span>
+                                            <span><?php echo Wo_Translate('groups_sub_categories', 'Groups Sub Categories'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['blogs-categories'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'blogs-categories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('blogs-categories'); ?>" data-ajax="?path=blogs-categories">
-                                            <span>Blogs Categories</span>
+                                            <span><?php echo Wo_Translate('blogs_categories', 'Blogs Categories'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['products-categories'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'products-categories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('products-categories'); ?>" data-ajax="?path=products-categories">
-                                            <span>Products Categories</span>
+                                            <span><?php echo Wo_Translate('products_categories', 'Products Categories'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['products-sub-categories'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'products-sub-categories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('products-sub-categories'); ?>" data-ajax="?path=products-sub-categories">
-                                            <span>Products Sub Categories</span>
+                                            <span><?php echo Wo_Translate('products_sub_categories', 'Products Sub Categories'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['job-categories'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'job-categories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('job-categories'); ?>" data-ajax="?path=job-categories">
-                                            <span>Job Categories</span>
+                                            <span><?php echo Wo_Translate('job_categories', 'Job Categories'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -996,19 +1042,19 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['add-new-gift'] == 1 || $wo['user']['permission']['manage-gifts'] == 1 ))) { ?>
                             <?php if ($wo['config']['gift_system'] == 1){?>
                             <li <?php echo ($page == 'manage-gifts' || $page == 'add-new-gift') ? 'class="open"' : ''; ?>>
-                                <a href="javascript:void(0);">Gifts</a>
+                                <a href="javascript:void(0);"><?php echo Wo_Translate('gifts', 'Gifts'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-gifts'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-gifts') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-gifts'); ?>" data-ajax="?path=manage-gifts">
-                                            <span>Manage Gifts</span>
+                                            <span><?php echo Wo_Translate('manage_gifts', 'Manage Gifts'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['add-new-gift'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'add-new-gift') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('add-new-gift'); ?>" data-ajax="?path=add-new-gift">
-                                            <span>Add New Gift</span>
+                                            <span><?php echo Wo_Translate('add_new_gift', 'Add New Gift'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -1020,19 +1066,19 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['manage-stickers'] == 1 || $wo['user']['permission']['add-new-sticker'] == 1 ))) { ?>
                             <?php if ($wo['config']['stickers_system'] == 1){?>
                             <li <?php echo ($page == 'manage-stickers' || $page == 'add-new-sticker') ? 'class="open"' : ''; ?>>
-                                <a href="javascript:void(0);">Stickers</a>
+                                <a href="javascript:void(0);"><?php echo Wo_Translate('stickers', 'Stickers'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-stickers'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'manage-stickers') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-stickers'); ?>" data-ajax="?path=manage-stickers">
-                                            <span>Manage Stickers</span>
+                                            <span><?php echo Wo_Translate('manage_stickers', 'Manage Stickers'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['add-new-sticker'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'add-new-sticker') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('add-new-sticker'); ?>" data-ajax="?path=add-new-sticker">
-                                            <span>Add New sticker</span>
+                                            <span><?php echo Wo_Translate('add_new_sticker', 'Add New sticker'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -1042,31 +1088,31 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['pages-fields'] == 1 || $wo['user']['permission']['groups-fields'] == 1 || $wo['user']['permission']['products-fields'] == 1 || $wo['user']['permission']['manage-profile-fields'] == 1 ))) { ?>
                             <li <?php echo ($page == 'pages-fields' || $page == 'groups-fields' || $page == 'products-fields' || $page == 'manage-profile-fields') ? 'class="open"' : ''; ?>>
-                                <a href="javascript:void(0);">Custom Fields</a>
+                                <a href="javascript:void(0);"><?php echo Wo_Translate('custom_fields', 'Custom Fields'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-profile-fields'] == 1)) { ?>
                                     <li>
-                                        <a <?php echo ($page == 'manage-profile-fields') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-profile-fields'); ?>" data-ajax="?path=manage-profile-fields">Custom Users Fields</a>
+                                        <a <?php echo ($page == 'manage-profile-fields') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-profile-fields'); ?>" data-ajax="?path=manage-profile-fields"><?php echo Wo_Translate('custom_users_fields', 'Custom Users Fields'); ?></a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['pages-fields'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'pages-fields') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pages-fields'); ?>" data-ajax="?path=pages-fields">
-                                            <span>Custom Pages Fields</span>
+                                            <span><?php echo Wo_Translate('custom_pages_fields', 'Custom Pages Fields'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['groups-fields'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'groups-fields') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('groups-fields'); ?>" data-ajax="?path=groups-fields">
-                                            <span>Custom Groups Fields</span>
+                                            <span><?php echo Wo_Translate('custom_groups_fields', 'Custom Groups Fields'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['products-fields'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'products-fields') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('products-fields'); ?>" data-ajax="?path=products-fields">
-                                            <span>Custom Products Fields</span>
+                                            <span><?php echo Wo_Translate('custom_products_fields', 'Custom Products Fields'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -1082,17 +1128,17 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">language</i>
                             </span>
-                            <span>Languages</span>
+                            <span><?php echo Wo_Translate('languages', 'Languages'); ?></span>
                         </a>
                         <ul <?php echo ($page == 'manage-languages' || $page == 'add-language' || $page == 'edit-lang') ? 'style="display: block;"' : ''; ?>>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['add-language'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'add-language') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('add-language'); ?>" data-ajax="?path=add-language">Add New Language & Keys</a>
+                                <a <?php echo ($page == 'add-language') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('add-language'); ?>" data-ajax="?path=add-language"><?php echo Wo_Translate('add_new_language_key', 'Add New Language & Keys'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-languages'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-languages' || $page == 'edit-lang') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-languages'); ?>" data-ajax="?path=manage-languages">Manage Languages</a>
+                                <a <?php echo ($page == 'manage-languages' || $page == 'edit-lang') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-languages'); ?>" data-ajax="?path=manage-languages"><?php echo Wo_Translate('manage_languages', 'Manage Languages'); ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -1104,45 +1150,45 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">account_circle</i>
                             </span>
-                            <span>Users</span>
+                            <span><?php echo Wo_Translate('users', 'Users'); ?></span>
                         </a>
                         <ul class="ml-menu">
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-users'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-users') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-users'); ?>" data-ajax="?path=manage-users">Manage Users</a>
+                                <a <?php echo ($page == 'manage-users') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-users'); ?>" data-ajax="?path=manage-users"><?php echo Wo_Translate('manage_users', 'Manage Users'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['online-users'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'online-users') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('online-users'); ?>" data-ajax="?path=online-users">Online Users</a>
+                                <a <?php echo ($page == 'online-users') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('online-users'); ?>" data-ajax="?path=online-users"><?php echo Wo_Translate('online_users', 'Online Users'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-stories'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-stories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-stories'); ?>" data-ajax="?path=manage-stories">Manage User Stories / Status</a>
+                                <a <?php echo ($page == 'manage-stories') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-stories'); ?>" data-ajax="?path=manage-stories"><?php echo Wo_Translate('manage_user_stories_status', 'Manage User Stories / Status'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-verification-reqeusts'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-verification-reqeusts') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-verification-reqeusts'); ?>" data-ajax="?path=manage-verification-reqeusts">Manage Verification Requests</a>
+                                <a <?php echo ($page == 'manage-verification-reqeusts') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-verification-reqeusts'); ?>" data-ajax="?path=manage-verification-reqeusts"><?php echo Wo_Translate('manage_verification_requests', 'Manage Verification Requests'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['affiliates-settings'] == 1 || $wo['user']['permission']['payment-reqeuests'] == 1 || $wo['user']['permission']['referrals-list'] == 1))) { ?>
 
                             <li>
-                                <a <?php echo ($page == 'affiliates-settings' || $page == 'payment-reqeuests' || $page == 'referrals-list') ? 'class="active"' : ''; ?> href="javascript:void(0);">Affiliates System</a>
+                                <a <?php echo ($page == 'affiliates-settings' || $page == 'payment-reqeuests' || $page == 'referrals-list') ? 'class="active"' : ''; ?> href="javascript:void(0);"><?php echo Wo_Translate('affiliates_system', 'Affiliates System'); ?></a>
                                 <ul class="ml-menu">
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['affiliates-settings'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'affiliates-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('affiliates-settings'); ?>" data-ajax="?path=affiliates-settings">
-                                            <span>Affiliates Settings</span>
+                                            <span><?php echo Wo_Translate('affiliates_settings', 'Affiliates Settings'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['payment-reqeuests'] == 1)) { ?>
                                     <li>
                                         <a <?php echo ($page == 'payment-reqeuests') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('payment-reqeuests'); ?>" data-ajax="?path=payment-reqeuests">
-                                            <span>Payment Requests</span>
+                                            <span><?php echo Wo_Translate('payment_requests', 'Payment Requests'); ?></span>
                                         </a>
                                     </li>
                                     <?php } ?>
@@ -1151,7 +1197,7 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-genders'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-genders') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-genders'); ?>" data-ajax="?path=manage-genders">Manage Genders</a>
+                                <a <?php echo ($page == 'manage-genders') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-genders'); ?>" data-ajax="?path=manage-genders"><?php echo Wo_Translate('manage_genders', 'Manage Genders'); ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -1163,38 +1209,38 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">attach_money</i>
                             </span>
-                            <span>Payments & Ads</span>
+                            <span><?php echo Wo_Translate('payments_ads', 'Payments & Ads'); ?></span>
                         </a>
                         <ul class="ml-menu">
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['payment-settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'payment-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('payment-settings'); ?>" data-ajax="?path=payment-settings">Payment Configuration</a>
+                                <a <?php echo ($page == 'payment-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('payment-settings'); ?>" data-ajax="?path=payment-settings"><?php echo Wo_Translate('payment_configuration', 'Payment Configuration'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['ads-settings'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'ads-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('ads-settings'); ?>" data-ajax="?path=ads-settings">Advertisement Settings </a>
+                                <a <?php echo ($page == 'ads-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('ads-settings'); ?>" data-ajax="?path=ads-settings"><?php echo Wo_Translate('advertisement_settings', 'Advertisement Settings'); ?> </a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-currencies'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-currencies') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-currencies'); ?>" data-ajax="?path=manage-currencies">Manage Currencies</a>
+                                <a <?php echo ($page == 'manage-currencies') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-currencies'); ?>" data-ajax="?path=manage-currencies"><?php echo Wo_Translate('manage_currencies', 'Manage Currencies'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-site-ads'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-site-ads') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-site-ads'); ?>" data-ajax="?path=manage-site-ads">Manage Site Advertisements</a>
+                                <a <?php echo ($page == 'manage-site-ads') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-site-ads'); ?>" data-ajax="?path=manage-site-ads"><?php echo Wo_Translate('manage_site_advertisements', 'Manage Site Advertisements'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-user-ads'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-user-ads') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-user-ads'); ?>" data-ajax="?path=manage-user-ads">Manage User Advertisements</a>
+                                <a <?php echo ($page == 'manage-user-ads') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-user-ads'); ?>" data-ajax="?path=manage-user-ads"><?php echo Wo_Translate('manage_user_advertisements', 'Manage User Advertisements'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['bank-receipts'] == 1)) { ?>
                             <li>
                                 <a <?php echo ($page == 'bank-receipts') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('bank-receipts'); ?>" data-ajax="?path=bank-receipts">
-                                    <span>Manage Bank Receipts</span>
+                                    <span><?php echo Wo_Translate('manage_bank_receipts', 'Manage Bank Receipts'); ?></span>
                                 </a>
                             </li>
                             <?php } ?>
@@ -1207,27 +1253,27 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                                 <span class="nav-link-icon">
                                     <i class="material-icons">stars</i>
                                 </span>
-                                <span>Pro System</span>
+                                <span><?php echo Wo_Translate('pro_system', 'Pro System'); ?></span>
                             </a>
                             <ul class="ml-menu">
                                 <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['pro-settings'] == 1)) { ?>
                                 <li>
-                                    <a <?php echo ($page == 'pro-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pro-settings'); ?>" data-ajax="?path=pro-settings">Pro System Settings</a>
+                                    <a <?php echo ($page == 'pro-settings') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pro-settings'); ?>" data-ajax="?path=pro-settings"><?php echo Wo_Translate('pro_system_settings', 'Pro System Settings'); ?></a>
                                 </li>
                                 <?php } ?>
                                 <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['pro-payments'] == 1)) { ?>
                                 <li>
-                                    <a <?php echo ($page == 'pro-payments') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pro-payments'); ?>" data-ajax="?path=pro-payments">Manage Payments</a>
+                                    <a <?php echo ($page == 'pro-payments') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pro-payments'); ?>" data-ajax="?path=pro-payments"><?php echo Wo_Translate('manage_payments', 'Manage Payments'); ?></a>
                                 </li>
                                 <?php } ?>
                                 <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['pro-memebers'] == 1)) { ?>
                                 <li>
-                                    <a <?php echo ($page == 'pro-memebers') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pro-memebers'); ?>" data-ajax="?path=pro-memebers">Manage Members</a>
+                                    <a <?php echo ($page == 'pro-memebers') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pro-memebers'); ?>" data-ajax="?path=pro-memebers"><?php echo Wo_Translate('manage_members', 'Manage Members'); ?></a>
                                 </li>
                                 <?php } ?>
                                 <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['pro-refund'] == 1)) { ?>
                                 <li>
-                                    <a <?php echo ($page == 'pro-refund') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pro-refund'); ?>" data-ajax="?path=pro-refund">Manage Refund Requests</a>
+                                    <a <?php echo ($page == 'pro-refund') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('pro-refund'); ?>" data-ajax="?path=pro-refund"><?php echo Wo_Translate('manage_refund_requests', 'Manage Refund Requests'); ?></a>
                                 </li>
                                 <?php } ?>
                             </ul>
@@ -1240,22 +1286,22 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">color_lens</i>
                             </span>
-                            <span>Design</span>
+                            <span><?php echo Wo_Translate('design', 'Design'); ?></span>
                         </a>
                         <ul class="ml-menu">
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-themes'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-themes') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-themes'); ?>" data-ajax="?path=manage-themes">Themes</a>
+                                <a <?php echo ($page == 'manage-themes') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-themes'); ?>" data-ajax="?path=manage-themes"><?php echo Wo_Translate('themes', 'Themes'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-site-design'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-site-design') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-site-design'); ?>" data-ajax="?path=manage-site-design">Change Site Design</a>
+                                <a <?php echo ($page == 'manage-site-design') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-site-design'); ?>" data-ajax="?path=manage-site-design"><?php echo Wo_Translate('change_site_design', 'Change Site Design'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['custom-code'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'custom-code') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('custom-code'); ?>" data-ajax="?path=custom-code">Custom JS / CSS</a>
+                                <a <?php echo ($page == 'custom-code') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('custom-code'); ?>" data-ajax="?path=custom-code"><?php echo Wo_Translate('custom_js_css', 'Custom JS / CSS'); ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -1267,77 +1313,77 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">build</i>
                             </span>
-                            <span>Tools</span>
+                            <span><?php echo Wo_Translate('tools', 'Tools'); ?></span>
                         </a>
                         <ul class="ml-menu">
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage_emails'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage_emails') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage_emails'); ?>" data-ajax="?path=manage_emails">Manage Emails</a>
+                                <a <?php echo ($page == 'manage_emails') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage_emails'); ?>" data-ajax="?path=manage_emails"><?php echo Wo_Translate('manage_emails', 'Manage Emails'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-invitation'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-invitation') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-invitation'); ?>" data-ajax="?path=manage-invitation">Users Invitation</a>
+                                <a <?php echo ($page == 'manage-invitation') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-invitation'); ?>" data-ajax="?path=manage-invitation"><?php echo Wo_Translate('users_invitation', 'Users Invitation'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['send_email'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'send_email') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('send_email'); ?>" data-ajax="?path=send_email">Send E-mail</a>
+                                <a <?php echo ($page == 'send_email') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('send_email'); ?>" data-ajax="?path=send_email"><?php echo Wo_Translate('send_email', 'Send E-mail'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-announcements'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-announcements') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-announcements'); ?>" data-ajax="?path=manage-announcements">Announcements</a>
+                                <a <?php echo ($page == 'manage-announcements') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-announcements'); ?>" data-ajax="?path=manage-announcements"><?php echo Wo_Translate('announcements', 'Announcements'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['auto-delete'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'auto-delete') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('auto-delete'); ?>" data-ajax="?path=auto-delete">Auto Delete Data</a>
+                                <a <?php echo ($page == 'auto-delete') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('auto-delete'); ?>" data-ajax="?path=auto-delete"><?php echo Wo_Translate('auto_delete_data', 'Auto Delete Data'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['auto-friend'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'auto-friend') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('auto-friend'); ?>" data-ajax="?path=auto-friend">Auto Friend</a>
+                                <a <?php echo ($page == 'auto-friend') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('auto-friend'); ?>" data-ajax="?path=auto-friend"><?php echo Wo_Translate('auto_friend', 'Auto Friend'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['auto-like'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'auto-like') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('auto-like'); ?>" data-ajax="?path=auto-like">Auto Page Like</a>
+                                <a <?php echo ($page == 'auto-like') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('auto-like'); ?>" data-ajax="?path=auto-like"><?php echo Wo_Translate('auto_page_like', 'Auto Page Like'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['auto-join'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'auto-join') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('auto-join'); ?>" data-ajax="?path=auto-join">Auto Group Join</a>
+                                <a <?php echo ($page == 'auto-join') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('auto-join'); ?>" data-ajax="?path=auto-join"><?php echo Wo_Translate('auto_group_join', 'Auto Group Join'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['fake-users'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'fake-users') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('fake-users'); ?>" data-ajax="?path=fake-users">Fake User Generator</a>
+                                <a <?php echo ($page == 'fake-users') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('fake-users'); ?>" data-ajax="?path=fake-users"><?php echo Wo_Translate('fake_user_generator', 'Fake User Generator'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['mass-notifications'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'mass-notifications') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('mass-notifications'); ?>" data-ajax="?path=mass-notifications">Mass Notifications</a>
+                                <a <?php echo ($page == 'mass-notifications') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('mass-notifications'); ?>" data-ajax="?path=mass-notifications"><?php echo Wo_Translate('mass_notifications', 'Mass Notifications'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['ban-users'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'ban-users') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('ban-users'); ?>" data-ajax="?path=ban-users">BlackList</a>
+                                <a <?php echo ($page == 'ban-users') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('ban-users'); ?>" data-ajax="?path=ban-users"><?php echo Wo_Translate('blacklist', 'BlackList'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['generate-sitemap'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'generate-sitemap') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('generate-sitemap'); ?>" data-ajax="?path=generate-sitemap">Generate SiteMap</a>
+                                <a <?php echo ($page == 'generate-sitemap') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('generate-sitemap'); ?>" data-ajax="?path=generate-sitemap"><?php echo Wo_Translate('generate_sitemap', 'Generate SiteMap'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-invitation-keys'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-invitation-keys') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-invitation-keys'); ?>" data-ajax="?path=manage-invitation-keys">Invitation Codes</a>
+                                <a <?php echo ($page == 'manage-invitation-keys') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-invitation-keys'); ?>" data-ajax="?path=manage-invitation-keys"><?php echo Wo_Translate('invitation_codes', 'Invitation Codes'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['backups'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'backups') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('backups'); ?>" data-ajax="?path=backups">Backup SQL & Files</a>
+                                <a <?php echo ($page == 'backups') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('backups'); ?>" data-ajax="?path=backups"><?php echo Wo_Translate('backup_sql_files', 'Backup SQL & Files'); ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -1349,17 +1395,17 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">description</i>
                             </span>
-                            <span>Pages</span>
+                            <span><?php echo Wo_Translate('pages', 'Pages'); ?></span>
                         </a>
                         <ul class="ml-menu">
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-custom-pages'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-custom-pages') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-custom-pages'); ?>" data-ajax="?path=manage-custom-pages">Manage Custom Pages</a>
+                                <a <?php echo ($page == 'manage-custom-pages') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-custom-pages'); ?>" data-ajax="?path=manage-custom-pages"><?php echo Wo_Translate('manage_custom_pages', 'Manage Custom Pages'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['edit-terms-pages'] == 1 && $wo['user']['permission']['manage_terms_pages'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage_terms_pages' || $page == 'edit-terms-pages') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage_terms_pages'); ?>" data-ajax="?path=manage_terms_pages">Manage Terms Pages</a>
+                                <a <?php echo ($page == 'manage_terms_pages' || $page == 'edit-terms-pages') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage_terms_pages'); ?>" data-ajax="?path=manage_terms_pages"><?php echo Wo_Translate('manage_terms_pages', 'Manage Terms Pages'); ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -1371,17 +1417,17 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">warning</i>
                             </span>
-                            <span>Reports</span>
+                            <span><?php echo Wo_Translate('reports', 'Reports'); ?></span>
                         </a>
                         <ul class="ml-menu">
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-reports'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-reports') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-reports'); ?>" data-ajax="?path=manage-reports">Manage Reports</a>
+                                <a <?php echo ($page == 'manage-reports') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-reports'); ?>" data-ajax="?path=manage-reports"><?php echo Wo_Translate('manage_reports', 'Manage Reports'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['user_reports'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'user_reports') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('user_reports'); ?>" data-ajax="?path=user_reports">Manage Users Reports</a>
+                                <a <?php echo ($page == 'user_reports') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('user_reports'); ?>" data-ajax="?path=user_reports"><?php echo Wo_Translate('manage_users_reports', 'Manage Users Reports'); ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -1393,27 +1439,27 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">compare_arrows</i>
                             </span>
-                            <span>API Settings</span>
+                            <span><?php echo Wo_Translate('api_settings', 'API Settings'); ?></span>
                         </a>
                         <ul class="ml-menu">
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-api-access-keys'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-api-access-keys') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-api-access-keys'); ?>" data-ajax="?path=manage-api-access-keys">Manage API Server Key</a>
+                                <a <?php echo ($page == 'manage-api-access-keys') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-api-access-keys'); ?>" data-ajax="?path=manage-api-access-keys"><?php echo Wo_Translate('manage_api_server_key', 'Manage API Server Key'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['push-notifications-system'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'push-notifications-system') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('push-notifications-system'); ?>" data-ajax="?path=push-notifications-system">Push Notifications Settings</a>
+                                <a <?php echo ($page == 'push-notifications-system') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('push-notifications-system'); ?>" data-ajax="?path=push-notifications-system"><?php echo Wo_Translate('push_notifications_settings', 'Push Notifications Settings'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['verfiy-applications'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'verfiy-applications') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('verfiy-applications'); ?>" data-ajax="?path=verfiy-applications">Verify Applications</a>
+                                <a <?php echo ($page == 'verfiy-applications') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('verfiy-applications'); ?>" data-ajax="?path=verfiy-applications"><?php echo Wo_Translate('verify_applications', 'Verify Applications'); ?></a>
                             </li>
                             <?php } ?>
                             <?php if ($is_admin || ($is_moderoter && $wo['user']['permission']['manage-third-psites'] == 1)) { ?>
                             <li>
-                                <a <?php echo ($page == 'manage-third-psites') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-third-psites'); ?>" data-ajax="?path=manage-third-psites">3rd Party Scripts</a>
+                                <a <?php echo ($page == 'manage-third-psites') ? 'class="active"' : ''; ?> href="<?php echo Wo_LoadAdminLinkSettings('manage-third-psites'); ?>" data-ajax="?path=manage-third-psites"><?php echo Wo_Translate('3rd_party_scripts', '3rd Party Scripts'); ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -1441,7 +1487,7 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">info</i>
                             </span>
-                            <span>System Status</span>
+                            <span><?php echo Wo_Translate('system_status', 'System Status'); ?></span>
                         </a>
                     </li>
                     <?php if ($is_admin || ($is_moderoter && ($wo['user']['permission']['changelog'] == 1))) { ?>
@@ -1450,7 +1496,7 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">update</i>
                             </span>
-                            <span>Changelogs</span>
+                            <span><?php echo Wo_Translate('changelogs', 'Changelogs'); ?></span>
                         </a>
                     </li>
                     <?php } ?>
@@ -1460,12 +1506,12 @@ if (!empty($_COOKIE['mode']) && $_COOKIE['mode'] == 'night') {
                             <span class="nav-link-icon">
                                 <i class="material-icons">more_vert</i>
                             </span>
-                            <span>FAQs</span>
+                            <span><?php echo Wo_Translate('faqs', 'FAQs'); ?></span>
                         </a>
                     </li>
                     <?php } ?>
                     <a class="pow_link" href="https://bit.ly/2R2jrcz" target="_blank">
-                        <p>Powered by</p>
+                        <p><?php echo Wo_Translate('powered_by', 'Powered by'); ?></p>
                         <img src="https://demo.wowonder.com/themes/default/img/logo.png">
                         <b class="badge">v<?php echo $wo['config']['version'];?></b>
                     </a>

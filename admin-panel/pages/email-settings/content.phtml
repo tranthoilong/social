@@ -1,32 +1,32 @@
 <div class="container-fluid">
     <div>
-        <h3>E-mail & SMS Setup</h3>
+        <h3><?php echo Wo_Translate('email_sms_setup', 'E-mail & SMS Setup'); ?></h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="#"><?php echo Wo_Translate('home', 'Home'); ?></a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="#">Settings</a>
+                    <a href="#"><?php echo Wo_Translate('settings', 'Settings'); ?></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">E-mail & SMS Setup</li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo Wo_Translate('email_sms_setup', 'E-mail & SMS Setup'); ?></li>
             </ol>
         </nav>
     </div>
     <div class="alert alert-info">
-       <i class="fa fa-fw fa-exclamation-triangle"></i> <strong>Info: </strong> For more information on how to setup e-mail server or SMS providers, please visit our <a href="https://docs.wowonder.com/#idocs_smtp" target="_blank">Documentation</a> page.
+       <i class="fa fa-fw fa-exclamation-triangle"></i> <strong><?php echo Wo_Translate('info', 'Info'); ?>: </strong> <?php echo Wo_Translate('email_sms_setup_info', 'For more information on how to setup e-mail server or SMS providers, please visit our'); ?> <a href="https://docs.wowonder.com/#idocs_smtp" target="_blank"><?php echo Wo_Translate('documentation', 'Documentation'); ?></a> <?php echo Wo_Translate('page', 'page'); ?>.
    </div>
     <!-- Vertical Layout -->
     <div class="row">
         <div class="col-lg-6 col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">E-mail Configuration</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('email_configuration', 'E-mail Configuration'); ?></h6>
                     <form class="email-settings" method="POST">
-                        <label for="smtp_or_mail" class="main-label">E-mail Server</label>
+                        <label for="smtp_or_mail" class="main-label"><?php echo Wo_Translate('email_server', 'E-mail Server'); ?></label>
                         <select class="form-control show-tick" id="smtp_or_mail" name="smtp_or_mail">
-                          <option value="smtp" <?php if($wo['config']['smtp_or_mail'] == 'smtp'){echo 'selected';};?> >SMTP Server</option>
-                          <option value="mail" <?php if($wo['config']['smtp_or_mail'] == 'mail'){echo 'selected';};?> >Server Mail (Default)</option>
+                          <option value="smtp" <?php if($wo['config']['smtp_or_mail'] == 'smtp'){echo 'selected';};?> ><?php echo Wo_Translate('smtp_server', 'SMTP Server'); ?></option>
+                          <option value="mail" <?php if($wo['config']['smtp_or_mail'] == 'mail'){echo 'selected';};?> ><?php echo Wo_Translate('server_mail_default', 'Server Mail (Default)'); ?></option>
                         </select>
                         <small class="admin-info">Select which E-mail server you want to use, Server Mail function is not recommended.</small>
                         <div class="clearfix"></div>

@@ -1,15 +1,15 @@
 <div class="container-fluid">
     <div>
-        <h3>Website Information</h3>
+        <h3><?php echo Wo_Translate('website_information', 'Website Information'); ?></h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="#"><?php echo Wo_Translate('home', 'Home'); ?></a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="#">Settings</a>
+                    <a href="#"><?php echo Wo_Translate('settings', 'Settings'); ?></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Website Information</li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo Wo_Translate('website_information', 'Website Information'); ?></li>
             </ol>
         </nav>
     </div>
@@ -18,36 +18,36 @@
         <div class="col-lg-6 col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Website Information</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('website_information', 'Website Information'); ?></h6>
                     <div class="site-settings-alert"></div>
                     <form class="site-settings" method="POST">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Website Title</label>
+                                <label class="form-label"><?php echo Wo_Translate('website_title', 'Website Title'); ?></label>
                                 <input type="text" id="siteTitle" name="siteTitle" class="form-control" value="<?php echo $wo['config']['siteTitle']; ?>">
-                                <small class="admin-info">Your website general title, it will appear on Google and on your browser tab.</small>
+                                <small class="admin-info"><?php echo Wo_Translate('website_title_desc', 'Your website general title, it will appear on Google and on your browser tab.'); ?></small>
                             </div>
                         </div>
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Website Name</label>
+                                <label class="form-label"><?php echo Wo_Translate('website_name', 'Website Name'); ?></label>
                                 <input type="text" id="siteName" name="siteName" class="form-control" value="<?php echo $wo['config']['siteName']; ?>">
-                                <small class="admin-info">Your website name, it will on website's footer and E-mails.</small>
+                                <small class="admin-info"><?php echo Wo_Translate('website_name_desc', 'Your website name, it will on website\'s footer and E-mails.'); ?></small>
                             </div>
                         </div>
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Website Keywords</label>
+                                <label class="form-label"><?php echo Wo_Translate('website_keywords', 'Website Keywords'); ?></label>
                                 <input type="text" id="siteKeywords" name="siteKeywords" class="form-control" value="<?php echo $wo['config']['siteKeywords']; ?>">
-                                <small class="admin-info">Your website's keyword, used mostly for SEO and search engines.</small>
+                                <small class="admin-info"><?php echo Wo_Translate('website_keywords_desc', 'Your website\'s keyword, used mostly for SEO and search engines.'); ?></small>
                             </div>
                         </div>
                         <hr>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <label class="form-label">Website Description</label>
+                                <label class="form-label"><?php echo Wo_Translate('website_description', 'Website Description'); ?></label>
                                 <textarea name="siteDesc" id="siteDesc" class="form-control" cols="30" rows="5"><?php echo $wo['config']['siteDesc']; ?></textarea>
                                 <small class="admin-info">Your website's description, used mostly for SEO and search engines, Max of 100 characters is recommended</small>
                             </div>

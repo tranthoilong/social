@@ -249,23 +249,23 @@ $groups_array = array();
 ?>
 <div class="container-fluid">
     <div>
-        <h3>Welcome back, <?php echo $wo['user']['name'];?></h3>
+        <h3><?php echo Wo_Translate('welcome_back', 'Welcome back'); ?>, <?php echo $wo['user']['name'];?></h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="#"><?php echo Wo_Translate('home', 'Home'); ?></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">DASHBOARD</li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo Wo_Translate('dashboard', 'DASHBOARD'); ?></li>
             </ol>
         </nav>
     </div>
     <!-- Widgets -->
-    <?php $getStatus = getStatus(); if (!empty($getStatus) && !empty(checkIfThereIsError($getStatus))) {?><div class="alert alert-danger"><strong>Important!</strong> There are some errors found on your system, please review <a href="<?php echo Wo_LoadAdminLinkSettings('system_status'); ?>" data-ajax="?path=system_status">System Status</a>.</div><?php }?>
+    <?php $getStatus = getStatus(); if (!empty($getStatus) && !empty(checkIfThereIsError($getStatus))) {?><div class="alert alert-danger"><strong><?php echo Wo_Translate('important', 'Important!'); ?></strong> <?php echo Wo_Translate('system_errors_found', 'There are some errors found on your system, please review'); ?> <a href="<?php echo Wo_LoadAdminLinkSettings('system_status'); ?>" data-ajax="?path=system_status"><?php echo Wo_Translate('system_status', 'System Status'); ?></a>.</div><?php }?>
     <div class="row clearfix">
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">TOTAL USERS</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('total_users', 'TOTAL USERS'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -282,7 +282,7 @@ $groups_array = array();
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">TOTAL POSTS</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('total_posts', 'TOTAL POSTS'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -299,7 +299,7 @@ $groups_array = array();
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">TOTAL PAGES</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('total_pages', 'TOTAL PAGES'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -316,7 +316,7 @@ $groups_array = array();
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">TOTAL GROUPS</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('total_groups', 'TOTAL GROUPS'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -333,7 +333,7 @@ $groups_array = array();
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">ONLINE USERS</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('online_users', 'ONLINE USERS'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -350,7 +350,7 @@ $groups_array = array();
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">TOTAL COMMENTS</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('total_comments', 'TOTAL COMMENTS'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -367,7 +367,7 @@ $groups_array = array();
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">TOTAL GAMES</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('total_games', 'TOTAL GAMES'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -384,7 +384,7 @@ $groups_array = array();
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">TOTAL MESSAGES</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('total_messages', 'TOTAL MESSAGES'); ?></h6>
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <div class="avatar">
@@ -405,7 +405,7 @@ $groups_array = array();
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">STATICS</h6>
+                    <h6 class="card-title"><?php echo Wo_Translate('statistics', 'STATICS'); ?></h6>
                     <div class="row">
                     <div class="col-md-11"></div>
                     <div class="col-md-1">
@@ -567,19 +567,19 @@ function users() {
                 enabled: false
             },
             series: [{
-        name: 'Users',
+        name: '<?php echo Wo_Translate('users', 'Users'); ?>',
         data: [<?php echo $u_array; ?>]
 
         },{
-        name: 'Posts',
+        name: '<?php echo Wo_Translate('posts', 'Posts'); ?>',
         data: [<?php echo $p_array; ?>]
 
         },{
-        name: 'Pages',
+        name: '<?php echo Wo_Translate('pages', 'Pages'); ?>',
         data: [<?php echo $pa_array; ?>]
 
         },{
-        name: 'Groups',
+        name: '<?php echo Wo_Translate('groups', 'Groups'); ?>',
         data: [<?php echo $g_array; ?>]
 
         }],

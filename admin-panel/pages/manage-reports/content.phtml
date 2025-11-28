@@ -187,16 +187,16 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
 ?>
 <div class="container-fluid">
     <div>
-        <h3>Manage Reports</h3>
+        <h3><?php echo Wo_Translate('manage_reports', 'Manage Reports'); ?></h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="#"><?php echo Wo_Translate('home', 'Home'); ?></a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="#">Reports</a>
+                    <a href="#"><?php echo Wo_Translate('reports', 'Reports'); ?></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Manage Reports</li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo Wo_Translate('manage_reports', 'Manage Reports'); ?></li>
             </ol>
         </nav>
     </div>
@@ -214,7 +214,7 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
                                 echo 'All';
                             } ?>
                         </div>
-                  <h6 class="card-title">Manage Reports</h6>
+                  <h6 class="card-title"><?php echo Wo_Translate('manage_reports', 'Manage Reports'); ?></h6>
                   <div class="row">
                       <div class="col-md-9" style="margin-bottom:0;">
                       </div>
@@ -235,10 +235,10 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
                                   <?php }else{ ?>
                                       <svg onclick="location.href = '<?php echo(Wo_LoadAdminLinkSettings('manage-reports?page-id=1').$sort_link."&sort=DESC_i") ?>'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#000000" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down cursor-p"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
                                   <?php } ?></th>
-					                  <th>Type</th>
-					                  <th>Reporter</th>
-					                  <th>Link</th>
-					                  <th>Time 
+					                  <th><?php echo Wo_Translate('type', 'Type'); ?></th>
+					                  <th><?php echo Wo_Translate('reporter', 'Reporter'); ?></th>
+					                  <th><?php echo Wo_Translate('link', 'Link'); ?></th>
+					                  <th><?php echo Wo_Translate('time', 'Time'); ?> 
                                   <?php if (!empty($_GET['sort']) && $_GET['sort'] == 'DESC_t') { ?>
                                       <svg onclick="location.href = '<?php echo(Wo_LoadAdminLinkSettings('manage-reports?page-id=1').$sort_link."&sort=ASC_t") ?>'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#000000" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up cursor-p"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
                                   <?php }else{ ?>
@@ -294,13 +294,13 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
                         <nav>
                           <ul class="pagination">
                             <li>
-                              <a href="<?php echo Wo_LoadAdminLinkSettings('manage-reports?page-id=1').$link; ?>" data-ajax="?path=manage-reports&page-id=1<?php echo($link); ?>" class="waves-effect" title='First Page'>
+                              <a href="<?php echo Wo_LoadAdminLinkSettings('manage-reports?page-id=1').$link; ?>" data-ajax="?path=manage-reports&page-id=1<?php echo($link); ?>" class="waves-effect" title='<?php echo Wo_Translate('first_page', 'First Page'); ?>'>
                                   <i class="material-icons">first_page</i>
                               </a>
                             </li>
                             <?php if ($page > 1) {  ?>
                               <li>
-                                  <a href="<?php echo Wo_LoadAdminLinkSettings('manage-reports?page-id=' . ($page - 1)).$link; ?>" data-ajax="?path=manage-reports&page-id=<?php echo($page - 1) ?><?php echo($link); ?>" class="waves-effect" title='Previous Page'>
+                                  <a href="<?php echo Wo_LoadAdminLinkSettings('manage-reports?page-id=' . ($page - 1)).$link; ?>" data-ajax="?path=manage-reports&page-id=<?php echo($page - 1) ?><?php echo($link); ?>" class="waves-effect" title='<?php echo Wo_Translate('previous_page', 'Previous Page'); ?>'>
                                       <i class="material-icons">chevron_left</i>
                                   </a>
                               </li>
@@ -323,13 +323,13 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
 
                             <?php if ($db->totalPages > $page) { ?>
                               <li>
-                                  <a href="<?php echo Wo_LoadAdminLinkSettings('manage-reports?page-id=' . ($page + 1)).$link; ?>" data-ajax="?path=manage-reports&page-id=<?php echo($page + 1) ?><?php echo($link); ?>" class="waves-effect" title="Next Page">
+                                  <a href="<?php echo Wo_LoadAdminLinkSettings('manage-reports?page-id=' . ($page + 1)).$link; ?>" data-ajax="?path=manage-reports&page-id=<?php echo($page + 1) ?><?php echo($link); ?>" class="waves-effect" title="<?php echo Wo_Translate('next_page', 'Next Page'); ?>">
                                       <i class="material-icons">chevron_right</i>
                                   </a>
                               </li>
                             <?php } ?>
                             <li>
-                              <a href="<?php echo Wo_LoadAdminLinkSettings('manage-reports?page-id=' . ($db->totalPages)).$link; ?>" data-ajax="?path=manage-reports&page-id=<?php echo($db->totalPages) ?><?php echo($link); ?>" class="waves-effect" title='Last Page'>
+                              <a href="<?php echo Wo_LoadAdminLinkSettings('manage-reports?page-id=' . ($db->totalPages)).$link; ?>" data-ajax="?path=manage-reports&page-id=<?php echo($db->totalPages) ?><?php echo($link); ?>" class="waves-effect" title='<?php echo Wo_Translate('last_page', 'Last Page'); ?>'>
                                   <i class="material-icons">last_page</i>
                               </a>
                             </li>
@@ -339,15 +339,15 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
                       <div class="clearfix"></div>
                         <div class="row">
                           <div class="col-lg-2 col-md-2">
-                              <span>Action</span>
+                              <span><?php echo Wo_Translate('action', 'Action'); ?></span>
                               <select class="form-control show-tick" id="action_type">
-                                  <option value="safe">Mark Safe</option>
-                                  <option value="delete">Delete</option>
+                                  <option value="safe"><?php echo Wo_Translate('mark_safe', 'Mark Safe'); ?></option>
+                                  <option value="delete"><?php echo Wo_Translate('delete', 'Delete'); ?></option>
                               </select>
                           </div>
                           <div class="col-lg-3 col-md-3">
                               <span>&nbsp;</span>
-                              <button type="button" class="btn btn-info waves-effect delete-selected d-block" disabled>Submit<span></span></button>
+                              <button type="button" class="btn btn-info waves-effect delete-selected d-block" disabled><?php echo Wo_Translate('submit', 'Submit'); ?><span></span></button>
                           </div>
                       </div>
                     </div>
@@ -361,13 +361,13 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
-            <h4 class="modal-title"><i class="fa fa-exclamation-circle"></i> VIEW REPORT</h4>
+            <h4 class="modal-title"><i class="fa fa-exclamation-circle"></i> <?php echo Wo_Translate('view_report', 'VIEW REPORT'); ?></h4>
          </div>
          <div class="modal-body">
             <p class="report_text"></p>
          </div>
          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo Wo_Translate('close', 'CLOSE'); ?></button>
          </div>
       </div>
    </div>
@@ -377,17 +377,17 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModal1Label">Delete Report?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModal1Label"><?php echo Wo_Translate('delete_report', 'Delete Report?'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<?php echo Wo_Translate('close', 'Close'); ?>">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this Report?
+                <?php echo Wo_Translate('delete_report_confirm', 'Are you sure you want to delete this Report?'); ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo Wo_Translate('close', 'Close'); ?></button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Wo_Translate('delete', 'Delete'); ?></button>
             </div>
         </div>
     </div>
@@ -396,17 +396,17 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModal1Label">Delete Report?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModal1Label"><?php echo Wo_Translate('delete_report', 'Delete Report?'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<?php echo Wo_Translate('close', 'Close'); ?>">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure that you want to remove the selected Report(s)?
+                <?php echo Wo_Translate('delete_selected_reports_confirm', 'Are you sure that you want to remove the selected Report(s)?'); ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="DeleteSelected()" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo Wo_Translate('close', 'Close'); ?></button>
+                <button type="button" class="btn btn-primary" onclick="DeleteSelected()" data-dismiss="modal"><?php echo Wo_Translate('submit', 'Submit'); ?></button>
             </div>
         </div>
     </div>
@@ -415,17 +415,17 @@ $db->where('recipient_id',0)->where('admin',1)->where('seen',0)->where('type','r
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModal1Label">Mark Safe?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModal1Label"><?php echo Wo_Translate('mark_safe', 'Mark Safe?'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<?php echo Wo_Translate('close', 'Close'); ?>">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want to mark this report as Safe?
+                <?php echo Wo_Translate('mark_safe_confirm', 'Are you sure you want to mark this report as Safe?'); ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Mark Safe</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo Wo_Translate('close', 'Close'); ?></button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Wo_Translate('mark_safe', 'Mark Safe'); ?></button>
             </div>
         </div>
     </div>

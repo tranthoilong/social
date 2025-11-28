@@ -1,16 +1,16 @@
 <?php $rand = uniqid(); ?>
 <div class="container-fluid">
     <div>
-        <h3>Announcements</h3>
+        <h3><?php echo Wo_Translate('announcements', 'Announcements'); ?></h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <a href="#"><?php echo Wo_Translate('home', 'Home'); ?></a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="#">Tools</a>
+                    <a href="#"><?php echo Wo_Translate('tools', 'Tools'); ?></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Announcements</li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo Wo_Translate('announcements', 'Announcements'); ?></li>
             </ol>
         </nav>
     </div>
@@ -19,14 +19,14 @@
 		<div class="col-lg-6 col-md-6">
             <div class="card">
                 <div class="card-body">
-					<h6 class="card-title">Active Announcements</h6>
+					<h6 class="card-title"><?php echo Wo_Translate('active_announcements', 'Active Announcements'); ?></h6>
 					<div class="active-announcements announcements">
 			               <?php
 			                  $activeAnnouncements = Wo_GetActiveAnnouncements();
 			                  
 			                  if (count($activeAnnouncements) < 1) {
 			                    
-			                    echo '<h5 class="no-active-announcements"><small>There are no active announcements.</small></h5>';
+			                    echo '<h5 class="no-active-announcements"><small>'.Wo_Translate('no_active_announcements', 'There are no active announcements.').'</small></h5>';
 			                  } else {
 			                  foreach ($activeAnnouncements as $wo['activeAnnouncement']) {
 			                  
