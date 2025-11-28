@@ -9,3 +9,7 @@
 /upload/sounds/
 /upload/photos/
 /nodejs/models/wo_langs.js
+
+# Test files with secrets - prevent committing test files that may contain credentials
+**/test*.php
+/assets/libraries/twilio/vendor/twilio/sdk/test*.php
