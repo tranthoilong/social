@@ -4503,10 +4503,270 @@ INSERT INTO `Wo_Langs` (`id`, `lang_key`, `type`, `english`, `arabic`, `dutch`, 
 (2554, 'in_order_to_sell_your_content', '', 'In order to sell your content and posts, start by creating a few packages.', 'من أجل بيع المحتوى الخاص بك ومنشوراتك، ابدأ بإنشاء بعض الحزم.', 'Om uw inhoud en berichten te verkopen, begint u met het maken van een paar pakketten.', 'Afin de vendre votre contenu et vos publications, commencez par créer quelques packages.', 'Um Ihre Inhalte und Beiträge zu verkaufen, erstellen Sie zunächst einige Pakete.', 'Per vendere i tuoi contenuti e i tuoi post, inizia creando alcuni pacchetti.', 'Para vender seu conteúdo e postagens, comece criando alguns pacotes.', 'Чтобы продавать свой контент и публикации, начните с создания нескольких пакетов.', 'Para vender su contenido y publicaciones, comience creando algunos paquetes.', 'İçeriğinizi ve gönderilerinizi satmak için birkaç paket oluşturarak başlayın.', 'अपनी सामग्री और पोस्ट बेचने के लिए, कुछ पैकेज बनाकर शुरुआत करें।', '为了销售您的内容和帖子，请首先创建一些包。', 'اپنے مواد اور پوسٹس کو بیچنے کے لیے، چند پیکجز بنا کر شروع کریں۔', 'Untuk menjual konten dan postingan Anda, mulailah dengan membuat beberapa paket.', 'Kako biste prodali svoj sadržaj i postove, počnite s stvaranjem nekoliko paketa.', 'על מנת למכור את התוכן והפוסטים שלך, התחל ביצירת מספר חבילות.', 'আপনার সামগ্রী এবং পোস্ট বিক্রি করার জন্য, কয়েকটি প্যাকেজ তৈরি করে শুরু করুন।', 'コンテンツや投稿を販売するには、まずいくつかのパッケージを作成します。', 'برای فروش محتوا و پست های خود، با ایجاد چند بسته شروع کنید.', 'För att sälja ditt innehåll och dina inlägg, börja med att skapa några paket.', 'Để bán nội dung và bài đăng của bạn, hãy bắt đầu bằng cách tạo một vài gói.', 'For at sælge dit indhold og dine indlæg, start med at oprette et par pakker.', 'Upang maibenta ang iyong nilalaman at mga post, magsimula sa pamamagitan ng paglikha ng ilang mga pakete.', '콘텐츠와 게시물을 판매하려면 몇 가지 패키지를 만드는 것부터 시작하세요.'),
 (2555, 'subscribe_to_any_users_yet', '', 'You didn\'t subscribe to any users yet.', 'أنت لم تشترك في أي مستخدمين حتى الآن.', 'U heeft zich nog niet op een gebruiker geabonneerd.', 'Vous n&#39;êtes encore abonné à aucun utilisateur.', 'Sie haben noch keine Benutzer abonniert.', 'Non hai ancora iscritto nessun utente.', 'Você ainda não se inscreveu em nenhum usuário.', 'Вы еще не подписались ни на одного пользователя.', 'Aún no te suscribiste a ningún usuario.', 'Henüz hiçbir kullanıcıya abone olmadınız.', 'आपने अभी तक किसी भी उपयोगकर्ता की सदस्यता नहीं ली है.', '您还没有订阅任何用户。', 'آپ نے ابھی تک کسی صارف کو سبسکرائب نہیں کیا ہے۔', 'Anda belum berlangganan ke pengguna mana pun.', 'Još se niste pretplatili ni na jednog korisnika.', 'עדיין לא נרשמת לאף משתמש.', 'আপনি এখনও কোনো ব্যবহারকারীর সদস্যতা নেননি.', 'まだユーザーを購読していません。', 'شما هنوز برای هیچ کاربری مشترک نشده اید.', 'Du har inte prenumererat på några användare än.', 'Bạn chưa đăng ký bất kỳ người dùng nào.', 'Du har ikke abonneret på nogen brugere endnu.', 'Hindi ka pa nag-subscribe sa sinumang user.', '아직 구독한 사용자가 없습니다.');
 
--- Thêm dữ liệu ngôn ngữ cho admin Wo_Langs
+-- Thêm dữ liệu ngôn ngữ cho admin Wo_Langs (Bản đã loại bỏ các bản ghi lang_key trùng lặp)
+
+INSERT INTO `Wo_Langs`
+(`id`, `lang_key`, `type`,
+ `english`,`arabic`,`dutch`,`french`,`german`,`italian`,`portuguese`,`russian`,`spanish`,
+ `turkish`,`hindi`,`chinese`,`urdu`,`indonesian`,`croatian`,`hebrew`,`bengali`,`japanese`,
+ `persian`,`swedish`,`vietnamese`,`danish`,`filipino`,`korean`)
+VALUES
+(2556,'admin_dashboard','',
+'Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard',
+'Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard',
+'Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard','Admin Dashboard'),
+
+(2557,'admin_settings','',
+'Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings',
+'Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings',
+'Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings','Admin Settings'),
+
+(2558,'admin_management','',
+'Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management',
+'Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management',
+'Admin Management','Admin Management','Admin Management','Admin Management','Admin Management','Admin Management'),
+
+(2559,'total_posts','',
+'TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS',
+'TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS',
+'TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS','TOTAL POSTS'),
+
+(2560,'total_pages','',
+'TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES',
+'TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES',
+'TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES','TOTAL PAGES'),
+
+(2561,'total_groups','',
+'TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS',
+'TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS',
+'TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS','TOTAL GROUPS'),
+
+(2562,'total_comments','',
+'TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS',
+'TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS',
+'TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS','TOTAL COMMENTS'),
+
+(2563,'total_games','',
+'TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES',
+'TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES',
+'TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES','TOTAL GAMES'),
+
+(2564,'total_messages','',
+'TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES',
+'TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES',
+'TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES','TOTAL MESSAGES'),
+
+(2565,'statistics','',
+'STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS',
+'STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS',
+'STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS','STATISTICS'),
+
+(2566,'system_errors_found','',
+'There are some errors found on your system, please review',
+'There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review',
+'There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review',
+'There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review','There are some errors found on your system, please review'),
+
+(2567,'system_status','',
+'System Status','System Status','System Status','System Status','System Status','System Status','System Status','System Status','System Status',
+'System Status','System Status','System Status','System Status','System Status','System Status','System Status','System Status','System Status',
+'System Status','System Status','System Status','System Status','System Status','System Status'),
+
+(2568,'settings','',
+'Settings','Settings','Settings','Settings','Settings','Settings','Settings','Settings','Settings',
+'Settings','Settings','Settings','Settings','Settings','Settings','Settings','Settings','Settings',
+'Settings','Settings','Settings','Settings','Settings','Settings'),
+
+(2569,'general_configuration','',
+'General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration',
+'General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration',
+'General Configuration','General Configuration','General Configuration','General Configuration','General Configuration','General Configuration'),
+
+(2570,'note_features_disabled','',
+'Note: Some features are disabled due to the website mode you used.',
+'Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.',
+'Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.',
+'Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.','Note: Some features are disabled due to the website mode you used.'),
+
+(2571,'developer_mode','',
+'Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode',
+'Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode',
+'Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode','Developer Mode'),
+
+(2572,'developer_mode_desc','',
+'By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.',
+'By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.',
+'By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.',
+'By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.','By enabling developer mode, error reporting will be enabled, it''s not recommended to enable this mode without the help of a developer.'),
+
+(2573,'welcome_page_users','',
+'Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users',
+'Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users',
+'Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users','Welcome Page Users'),
+
+(2574,'default_language','',
+'Default Language','Default Language','Default Language','Default Language','Default Language','Default Language','Default Language','Default Language','Default Language',
+'Default Language','Default Language','Default Language','Default Language','Default Language','Default Language','Default Language','Default Language','Default Language',
+'Default Language','Default Language','Default Language','Default Language','Default Language','Default Language'),
+
+(2575,'date_format','',
+'Date Format','Date Format','Date Format','Date Format','Date Format','Date Format','Date Format','Date Format','Date Format',
+'Date Format','Date Format','Date Format','Date Format','Date Format','Date Format','Date Format','Date Format','Date Format',
+'Date Format','Date Format','Date Format','Date Format','Date Format','Date Format'),
+
+(2576,'landing_page','',
+'Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page',
+'Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page',
+'Landing Page','Landing Page','Landing Page','Landing Page','Landing Page','Landing Page'),
+
+(2577,'user_configuration','',
+'User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration',
+'User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration',
+'User Configuration','User Configuration','User Configuration','User Configuration','User Configuration','User Configuration');
+
+INSERT INTO `Wo_Langs`
+(`id`, `lang_key`, `type`, `english`, `arabic`, `dutch`, `french`, `german`, `italian`,
+ `portuguese`, `russian`, `spanish`, `turkish`, `hindi`, `chinese`, `urdu`, `indonesian`,
+ `croatian`, `hebrew`, `bengali`, `japanese`, `persian`, `swedish`, `vietnamese`, `danish`,
+ `filipino`, `korean`)
+VALUES
+(2578, 'save', '', 'Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save','Save'),
+(2579, 'cancel', '', 'Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel','Cancel'),
+(2580, 'delete', '', 'Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete','Delete'),
+(2581, 'edit', '', 'Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit','Edit'),
+(2582, 'add', '', 'Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add','Add'),
+(2583, 'update', '', 'Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update','Update'),
+(2584, 'submit', '', 'Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit','Submit'),
+(2585, 'reset', '', 'Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset','Reset'),
+(2586, 'search', '', 'Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search','Search'),
+(2587, 'filter', '', 'Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter','Filter'),
+(2588, 'export', '', 'Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export','Export'),
+(2589, 'import', '', 'Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import','Import'),
+(2590, 'back', '', 'Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back','Back'),
+(2591, 'next', '', 'Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next','Next'),
+(2592, 'previous', '', 'Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous','Previous'),
+(2593, 'close', '', 'Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close','Close'),
+(2594, 'confirm', '', 'Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm','Confirm'),
+(2595, 'yes', '', 'Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes','Yes'),
+(2596, 'no', '', 'No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No','No'),
+(2597, 'enable', '', 'Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable','Enable'),
+(2598, 'disable', '', 'Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable','Disable'),
+(2599, 'active', '', 'Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active','Active'),
+(2600, 'inactive', '', 'Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive','Inactive'),
+(2601, 'pending', '', 'Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending','Pending'),
+(2602, 'verified', '', 'Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified','Verified'),
+(2603, 'unverified', '', 'Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified','Unverified'),
+(2604, 'approved', '', 'Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved','Approved'),
+(2605, 'rejected', '', 'Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected','Rejected'),
+(2606, 'view', '', 'View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View','View'),
+(2607, 'details', '', 'Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details','Details'),
+(2608, 'manage', '', 'Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage','Manage'),
+(2609, 'create', '', 'Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create','Create'),
+(2610, 'remove', '', 'Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove','Remove');
+
+INSERT INTO `Wo_Langs`
+(`id`,`lang_key`,`type`,`english`,`arabic`,`dutch`,`french`,`german`,`italian`,
+ `portuguese`,`russian`,`spanish`,`turkish`,`hindi`,`chinese`,`urdu`,`indonesian`,
+ `croatian`,`hebrew`,`bengali`,`japanese`,`persian`,`swedish`,`vietnamese`,`danish`,
+ `filipino`,`korean`)
+VALUES
+(2611,'success','', 'Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success','Success'),
+(2612,'error','', 'Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error','Error'),
+(2613,'warning','', 'Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning','Warning'),
+(2614,'info','', 'Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info','Info'),
+(2615,'loading','', 'Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...','Loading...'),
+(2616,'please_wait','', 'Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...','Please wait...'),
+(2617,'operation_successful','', 'Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful','Operation successful'),
+(2618,'operation_failed','', 'Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed','Operation failed'),
+(2619,'data_saved','', 'Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully','Data saved successfully'),
+(2620,'data_updated','', 'Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully','Data updated successfully'),
+(2621,'data_deleted','', 'Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully','Data deleted successfully'),
+(2622,'confirm_delete','', 'Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?','Are you sure you want to delete this?'),
+(2623,'no_data_found','', 'No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found','No data found'),
+(2624,'records_found','', 'records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found','records found'),
+(2625,'showing','', 'Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing','Showing'),
+(2626,'of','', 'of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of','of'),
+(2627,'results','', 'results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results','results'),
+
+-- USER MANAGEMENT
+
+(2628,'manage_users','', 'Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users','Manage Users'),
+(2629,'user_list','', 'User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List','User List'),
+(2630,'username','', 'Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username','Username'),
+(2631,'email','', 'Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email','Email'),
+(2632,'name','', 'Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name','Name'),
+(2633,'first_name','', 'First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name','First Name'),
+(2634,'last_name','', 'Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name','Last Name'),
+(2635,'phone_number','', 'Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number','Phone Number'),
+(2636,'ip_address','', 'IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address','IP Address'),
+(2637,'joined','', 'Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined','Joined'),
+(2638,'last_seen','', 'Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen','Last Seen'),
+(2639,'status','', 'Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status','Status'),
+(2640,'actions','', 'Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions','Actions'),
+(2641,'ban_user','', 'Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User','Ban User'),
+(2642,'unban_user','', 'Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User','Unban User'),
+(2643,'verify_user','', 'Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User','Verify User'),
+(2644,'delete_user','', 'Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User','Delete User'),
+(2645,'edit_user','', 'Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User','Edit User'),
+(2646,'view_profile','', 'View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile','View Profile'),
+
+-- POST MANAGEMENT
+
+(2647,'manage_posts','', 'Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts','Manage Posts'),
+(2648,'post_list','', 'Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List','Post List'),
+(2649,'post_content','', 'Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content','Post Content'),
+(2650,'post_author','', 'Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author','Post Author'),
+(2651,'post_date','', 'Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date','Post Date'),
+(2652,'post_type','', 'Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type','Post Type'),
+(2653,'post_status','', 'Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status','Post Status'),
+(2654,'approve_post','', 'Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post','Approve Post'),
+(2655,'delete_post','', 'Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post','Delete Post'),
+(2656,'edit_post','', 'Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post','Edit Post'),
+(2657,'view_post','', 'View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post','View Post');
+
+INSERT INTO `Wo_Langs`
+(`id`,`lang_key`,`type`,`english`,`arabic`,`dutch`,`french`,`german`,`italian`,
+ `portuguese`,`russian`,`spanish`,`turkish`,`hindi`,`chinese`,`urdu`,`indonesian`,
+ `croatian`,`hebrew`,`bengali`,`japanese`,`persian`,`swedish`,`vietnamese`,`danish`,
+ `filipino`,`korean`)
+VALUES
+(2658,'manage_pages','', 'Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages','Manage Pages'),
+(2659,'page_list','', 'Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List','Page List'),
+(2660,'page_name','', 'Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name','Page Name'),
+(2661,'page_category','', 'Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category','Page Category'),
+(2662,'page_owner','', 'Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner','Page Owner'),
+(2663,'page_likes','', 'Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes','Page Likes'),
+(2664,'page_followers','', 'Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers','Page Followers');
+
+INSERT INTO `Wo_Langs`
+(`id`,`lang_key`,`type`,`english`,`arabic`,`dutch`,`french`,`german`,`italian`,
+ `portuguese`,`russian`,`spanish`,`turkish`,`hindi`,`chinese`,`urdu`,`indonesian`,
+ `croatian`,`hebrew`,`bengali`,`japanese`,`persian`,`swedish`,`vietnamese`,`danish`,
+ `filipino`,`korean`)
+VALUES
+(2665,'manage_groups','', 'Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups','Manage Groups'),
+(2666,'group_list','', 'Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List','Group List'),
+(2667,'group_name','', 'Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name','Group Name'),
+(2668,'group_category','', 'Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category','Group Category'),
+(2669,'group_members','', 'Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members','Group Members'),
+(2670,'group_posts','', 'Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts','Group Posts');
+
+INSERT INTO `Wo_Langs`
+(`id`,`lang_key`,`type`,`english`,`arabic`,`dutch`,`french`,`german`,`italian`,
+ `portuguese`,`russian`,`spanish`,`turkish`,`hindi`,`chinese`,`urdu`,`indonesian`,
+ `croatian`,`hebrew`,`bengali`,`japanese`,`persian`,`swedish`,`vietnamese`,`danish`,
+ `filipino`,`korean`)
+VALUES
+(2671,'manage_reports','', 'Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports','Manage Reports'),
+(2672,'report_list','', 'Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List','Report List'),
+(2673,'report_type','', 'Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type','Report Type'),
+(2674,'report_reason','', 'Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason','Report Reason'),
+(2675,'report_date','', 'Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date','Report Date'),
+(2676,'report_status','', 'Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status','Report Status'),
+(2677,'ignore_report','', 'Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report','Ignore Report'),
+(2678,'take_action','', 'Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action','Take Action');
 
 
--- --------------------------------------------------------
 
 --
 -- Table structure for table `Wo_Likes`
