@@ -1,0 +1,3 @@
+docker exec -i wowonder-db mysql -uwowonder -pchange_me_app wowonder -e "INSERT INTO Wo_Users (user_id, username, email, password, admin, type, active) VALUES (1, 'admin', 'admin@admin.com', '\$2y\$10\$D3X145NFSDRwbN6E5yaA4.pnPwRS8A9ny83cTAvf6ggW/7zq99JYi', '1', '1', '1'); SELECT user_id, username, admin, type FROM Wo_Users WHERE user_id = 1;"
+
+docker exec -i wowonder-db mysql -uwowonder -pchange_me_app wowonder -e "UPDATE Wo_Users SET admin = '1', type = '1' WHERE user_id = 1; SELECT user_id, username, admin, type FROM Wo_Users WHERE user_id = 1;"

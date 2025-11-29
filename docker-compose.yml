@@ -57,8 +57,8 @@ services:
       - "443:443"
     volumes:
       - .:/var/www/html
-      - ./docker/nginx/goivondautu.delitech.vn:/etc/nginx/conf.d/goivondautu.delitech.vn.conf
-      - ./docker/nginx/goivondautu.delitech.vn.https:/etc/nginx/conf.d/goivondautu.delitech.vn.https
+      - ./docker/nginx/goivonkhoinghiep.vn:/etc/nginx/conf.d/goivonkhoinghiep.vn.conf
+      - ./docker/nginx/goivonkhoinghiep.vn.https:/etc/nginx/conf.d/goivonkhoinghiep.vn.https
       - ./docker/nginx/rewrites.inc:/etc/nginx/conf.d/rewrites.inc
       - ./docker/nginx/ssl:/etc/letsencrypt:ro
       - ./docker/nginx/certbot:/var/www/certbot
